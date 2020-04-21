@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNewsTable extends Migration
+class CreatePrintingAuthorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('printing_authors', function (Blueprint $table) {
             $table->id();
-            //$table->foreignId('user_id');
-            $table->text('short_text');
-            $table->longText('all_text');
-            $table->string('picture_path');
+            $table->string('name');
+            $table->timestamp('born_in')->nullable();
+            $table->timestamp('died_in')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateNewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('printing_authors');
     }
 }

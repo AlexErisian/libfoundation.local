@@ -15,7 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('readercard_id');
+            $table->foreignId('role_id')->constrained();
+            $table->foreignId('readercard_id')->constrained();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
@@ -24,9 +25,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('readercard_id')->references('id')
-                ->on('readercards');
         });
     }
 

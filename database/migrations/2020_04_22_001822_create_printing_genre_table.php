@@ -15,13 +15,8 @@ class CreatePrintingGenreTable extends Migration
     {
         Schema::create('printing_genre', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('printing_id');
-            $table->foreignId('printing_genre_id');
-
-            $table->foreign('printing_id')->references('id')
-                ->on('printings');
-            $table->foreign('printing_genre_id')->references('id')
-                ->on('printing_genres');
+            $table->foreignId('printing_id')->constrained();
+            $table->foreignId('printing_genre_id')->constrained();
         });
     }
 

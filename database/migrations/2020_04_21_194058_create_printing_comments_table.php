@@ -15,16 +15,11 @@ class CreatePrintingCommentsTable extends Migration
     {
         Schema::create('printing_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('printing_id');
-            $table->foreignId('user_id');
+            $table->foreignId('printing_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->text('text');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('printing_id')->references('id')
-                ->on('printings');
-            $table->foreign('user_id')->references('id')
-                ->on('users');
         });
     }
 

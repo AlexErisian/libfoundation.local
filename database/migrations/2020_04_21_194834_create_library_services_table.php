@@ -15,18 +15,13 @@ class CreateLibraryServicesTable extends Migration
     {
         Schema::create('library_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('readercard_id');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('readercard_id')->constrained();
             $table->integer('exemplars_given')->unsigned();
             $table->timestamps();
             $table->timestamp('given_up_to');
             $table->timestamp('returned_at')->nullable();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')
-                ->on('users');
-            $table->foreign('readercard_id')->references('id')
-                ->on('readercards');
         });
     }
 

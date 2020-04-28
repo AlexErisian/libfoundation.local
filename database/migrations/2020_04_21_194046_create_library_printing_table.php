@@ -19,8 +19,8 @@ class CreateLibraryPrintingTable extends Migration
             $table->foreignId('printing_id')->constrained();
             $table->integer('exemplars_registered')->unsigned();
             $table->integer('exemplars_stored')->unsigned();
-            $table->integer('rack_number')->unsigned();
-            $table->integer('rack_floor')->unsigned();
+            $table->integer('rack_number')->unsigned()->nullable();
+            $table->integer('rack_floor')->unsigned()->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

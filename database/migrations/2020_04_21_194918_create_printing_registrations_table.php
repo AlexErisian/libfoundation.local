@@ -18,7 +18,8 @@ class CreatePrintingRegistrationsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('library_printing_id')
                 ->constrained('library_printing');
-            $table->integer('exemplars_registered');
+            $table->integer('exemplars_registered_initially');
+            $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

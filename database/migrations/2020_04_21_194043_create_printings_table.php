@@ -19,8 +19,11 @@ class CreatePrintingsTable extends Migration
             $table->foreignId('printing_pubhouse_id')->constrained();
             $table->foreignId('printing_type_id')->constrained();
             $table->string('title');
-            $table->timestamp('published_at');
+            $table->string('slug')->unique();
+            $table->integer('publication_year')->unsigned();
+            $table->string('isbn')->nullable();
             $table->text('annotation');
+            $table->string('picture_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

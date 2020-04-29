@@ -18,6 +18,7 @@ $factory->define(Printing::class, function (Faker $faker) {
         'publication_year' => rand(1950, 2020),
         'isbn' => rand(1, 5) > 1 ? $faker->isbn13 : null,
         'annotation' => $faker->realText(rand(100, 500)),
+        'picture_path'=> $faker->imageUrl(640,480, 'abstract'),
         'created_at' => $currentDateTime,
         'updated_at' => $currentDateTime,
     ];

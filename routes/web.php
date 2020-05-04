@@ -15,12 +15,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('main');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Foundation'], function () {
-    Route::resource('posts', 'PostController');
+    Route::resource('posts', 'PostController')
+        ->only(['index', 'show']);
+});
+
+Route::group(['namespace' => 'Foundation\Admin',
+    'prefix' => 'admin'], function () {
+    Route::get('/', function () {
+        return view('admin.panel');
+    })->name('admin.panel');
+    Route::resource('printing-authors', 'PrintingAuthorController')
+    ->names('admin.printing-authors');
 });

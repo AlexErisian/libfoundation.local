@@ -17,7 +17,8 @@ class CreateLibrariesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->text('notes');
+            $table->text('notes')->nullable();
+            $table->string('picture_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Foundation\Admin;
 
-use App\Http\Controllers\Foundation\Admin\BaseController;
 use App\Repositories\PrintingAuthorRepository;
 use Illuminate\Http\Request;
 
@@ -12,12 +11,13 @@ class PrintingAuthorController extends BaseController
      * Display a listing of the resource.
      *
      * @param PrintingAuthorRepository $repository
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(PrintingAuthorRepository $repository)
     {
-        $authors = $repository->getAllWithPagination(15);
-        dd($authors);
+        $authorsPagination = $repository->getAllWithPagination(15);
+        return view('admin.printing-authors.index',
+            compact('authorsPagination'));
     }
 
     /**
@@ -33,7 +33,7 @@ class PrintingAuthorController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,7 +44,7 @@ class PrintingAuthorController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +55,7 @@ class PrintingAuthorController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,8 +66,8 @@ class PrintingAuthorController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,7 +78,7 @@ class PrintingAuthorController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

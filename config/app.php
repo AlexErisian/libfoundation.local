@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Libfoundation'),
+    'name' => env('APP_NAME', 'LibFoundation'),
 
     /*
     |--------------------------------------------------------------------------

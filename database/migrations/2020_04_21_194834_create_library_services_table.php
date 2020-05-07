@@ -17,10 +17,12 @@ class CreateLibraryServicesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('readercard_id')->constrained();
+            $table->foreignId('library_printing_id')
+                ->constrained('library_printing');
             $table->integer('exemplars_given')->unsigned();
-            $table->timestamps();
             $table->timestamp('given_up_to');
             $table->timestamp('returned_at')->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

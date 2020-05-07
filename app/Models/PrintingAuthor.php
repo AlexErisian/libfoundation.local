@@ -14,4 +14,9 @@ class PrintingAuthor extends Model
     protected $fillable = [
         'name', 'born_in', 'died_in', 'notes',
     ];
+
+    public function printings()
+    {
+        return $this->hasMany(Printing::class);
+    }
 }

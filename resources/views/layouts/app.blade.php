@@ -22,45 +22,46 @@
 </head>
 <body class="d-flex flex-column h-100">
 <div id="app" class="flex-shrink-0">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <h3>{{ config('app.name') }}</h3>
+                <h3 class="text-white">{{ config('app.name') }}</h3>
             </a>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link text-light"
                            href="{{ route('login') }}">{{ __('Увійти') }}</a>
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link"
+                            <a class="nav-link text-light"
                                href="{{ route('register') }}">{{ __('Зареєструватися') }}</a>
                         </li>
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle"
+                        <a id="navbarDropdown"
+                           class="nav-link dropdown-toggle text-light"
                            href="#" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right"
-                             aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"
+                        <div
+                            class="dropdown-menu dropdown-menu-right position-absolute"
+                            aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-danger"
                                href="{{ route('logout') }}"
                                onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                               document.getElementById('logout-form').submit();">
                                 {{ __('Вийти') }}
                             </a>
-
                             <form id="logout-form"
-                                  action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
+                                  class="d-none"
+                                  action="{{ route('logout') }}" method="POST">
                                 @csrf
                             </form>
                         </div>
@@ -100,18 +101,20 @@
                                     {{ __('Про систему') }}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                   href="">
-                                    {{ __('Панель бібліотекара') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @if(URL::current() == route('admin.panel')) active @endif"
-                                   href="{{ route('admin.panel') }}">
-                                    {{ __('Панель адміністратора') }}
-                                </a>
-                            </li>
+                            @auth
+                                <li class="nav-item">
+                                    <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
+                                       href="">
+                                        {{ __('Панель бібліотекара') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @if(URL::current() == route('admin.panel')) active @endif"
+                                       href="{{ route('admin.panel') }}">
+                                        {{ __('Панель адміністратора') }}
+                                    </a>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>

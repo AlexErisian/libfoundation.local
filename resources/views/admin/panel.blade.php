@@ -52,8 +52,8 @@
                     11. Коментарі до видань
                 </a>
                 <a class="btn btn-link"
-                   href="{{ route('admin.library-printing-links.index') }}">
-                    12. Зв'язки "бібліотека-видання"
+                   href="{{ route('admin.bookshelves.index') }}">
+                    12. Книжні шафи
                 </a>
                 <a class="btn btn-link"
                    href="{{ route('admin.printing-genre-links.index') }}">

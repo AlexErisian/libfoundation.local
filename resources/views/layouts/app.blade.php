@@ -72,6 +72,9 @@
     </nav>
 
     <main class="py-2" role="main">
+        @if(session('role_rejection'))
+            @include('messages.role_rejection')
+        @endif
         <div class="row justify-content-center m-0">
             <div class="col-xl-2 col-md-3 px-0">
                 <div class="card shadow-sm">
@@ -102,18 +105,23 @@
                                 </a>
                             </li>
                             @auth
-                                <li class="nav-item">
-                                    <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                       href="">
-                                        {{ __('Панель бібліотекара') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if(URL::current() == route('admin.panel')) active @endif"
-                                       href="{{ route('admin.panel') }}">
-                                        {{ __('Панель адміністратора') }}
-                                    </a>
-                                </li>
+                                @if(auth()->user()->role->name === 'librarian'
+                                 || auth()->user()->role->name === 'admin')
+                                    <li class="nav-item">
+                                        <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
+                                           href="">
+                                            {{ __('Панель бібліотекара') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                @if(auth()->user()->role->name === 'admin')
+                                    <li class="nav-item">
+                                        <a class="nav-link @if(URL::current() == route('admin.panel')) active @endif"
+                                           href="{{ route('admin.panel') }}">
+                                            {{ __('Панель адміністратора') }}
+                                        </a>
+                                    </li>
+                                @endif
                             @endauth
                         </ul>
                     </div>

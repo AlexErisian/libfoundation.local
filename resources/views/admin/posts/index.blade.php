@@ -19,7 +19,6 @@
                         <td>Заголовок</td>
                         <td class="d-none d-md-table-cell">Чи опубліковано</td>
                         <td class="d-none d-md-table-cell">Опубліковано</td>
-                        <td class="d-none d-lg-table-cell">Створено</td>
                         <td class="d-none d-lg-table-cell">Змінено</td>
                     </tr>
                     </thead>
@@ -35,9 +34,8 @@
                                     {{ $post->title }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">@if($post->is_published)Так@elseНі@endif</td>
+                            <td class="d-none d-md-table-cell">@if($post->is_published) Так @else Ні @endif</td>
                             <td class="d-none d-md-table-cell">{{ $post->published_at }}</td>
-                            <td class="d-none d-lg-table-cell">{{ $post->created_at }}</td>
                             <td class="d-none d-lg-table-cell">{{ $post->updated_at }}</td>
                         </tr>
                     @endforeach

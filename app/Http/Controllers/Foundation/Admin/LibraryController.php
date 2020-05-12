@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers\Foundation\Admin;
 
+use App\Http\Requests\LibraryFormRequest;
 use App\Repositories\LibraryRepository;
-use Illuminate\Http\Request;
 
 class LibraryController extends BaseController
 {
     /**
+     * @property LibraryRepository
+     */
+    private $libraryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->libraryRepository = app(LibraryRepository::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param LibraryRepository $repository
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(LibraryRepository $repository)
+    public function index()
     {
-        $librariesPagination = $repository->getAllWithPagination(15);
+        $librariesPagination = $this->libraryRepository
+            ->getAllWithPagination(15, false);
+
         return view('admin.libraries.index',
             compact('librariesPagination'));
     }
@@ -23,22 +35,32 @@ class LibraryController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('admin.libraries.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param LibraryFormRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(LibraryFormRequest $request)
     {
-        //
+        $result = $this->libraryRepository->saveModel($request->all());
+
+        if ($result['succeed']) {
+            return redirect()
+                ->route('admin.libraries.edit', $result['id'])
+                ->with(['success' => 'Запис успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Помилка збереження запису."])
+                ->withInput();
+        }
     }
 
     /**
@@ -56,23 +78,47 @@ class LibraryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param LibraryRepository $repository
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
+        $library = $this->libraryRepository->getEdit($id);
+        if (empty($library)) abort(404);
 
+        return view('admin.libraries.edit',
+            compact('library'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param LibraryFormRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(LibraryFormRequest $request, $id)
     {
-        //
+        $library = $this->libraryRepository->getEdit($id);
+
+        if (empty($library)) {
+            return back()
+                ->withErrors(['msg' => "Запис з ідентифікатором [{$id}] не знайдено."])
+                ->withInput();
+        }
+
+        $result = $this->libraryRepository
+            ->updateModel($library, $request->all());
+
+        if ($result) {
+            return redirect()
+                ->route('admin.libraries.edit', $id)
+                ->with(['success' => 'Запис успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Помилка збереження запису."])
+                ->withInput();
+        }
     }
 
     /**

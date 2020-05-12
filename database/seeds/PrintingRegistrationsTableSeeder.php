@@ -13,13 +13,13 @@ class PrintingRegistrationsTableSeeder extends Seeder
     public function run()
     {
         $currentDateTime = Carbon::now()->toDateTimeString();
-        $nbInitially = DB::table('library_printing')
+        $nbInitially = DB::table('bookshelves')
             ->pluck('exemplars_registered');
         $registrations = [];
         for ($i = 1; $i <= 300; $i++) {
             $registrations[] = [
                 'user_id' => 2,
-                'library_printing_id' => $i,
+                'bookshelf_id' => $i,
                 'exemplars_registered_initially' => $nbInitially[$i-1],
                 'created_at' => $currentDateTime,
                 'updated_at' => $currentDateTime,

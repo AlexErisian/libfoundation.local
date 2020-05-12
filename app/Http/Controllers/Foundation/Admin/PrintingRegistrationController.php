@@ -8,14 +8,24 @@ use Illuminate\Http\Request;
 class PrintingRegistrationController extends BaseController
 {
     /**
+     * @property PrintingRegistrationRepository
+     */
+    private $registrationRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->registrationRepository = app(PrintingRegistrationRepository::class);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @param PrintingRegistrationRepository $repository
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(PrintingRegistrationRepository $repository)
+    public function index()
     {
-        $registrationsPagination = $repository
+        $registrationsPagination = $this->registrationRepository
             ->getAllWithPagination(15);
         return view('admin.printing-registrations.index',
             compact('registrationsPagination'));
@@ -57,11 +67,15 @@ class PrintingRegistrationController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $registration = $this->registrationRepository->getEdit($id);
+        if (empty($registration)) abort(404);
+
+        return view('admin.printing-registrations.edit',
+            compact('registration'));
     }
 
     /**
@@ -69,11 +83,30 @@ class PrintingRegistrationController extends BaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $registration = $this->registrationRepository->getEdit($id);
+
+        if (empty($registration)) {
+            return back()
+                ->withErrors(['msg' => "Запис з ідентифікатором [{$id}] не знайдено."])
+                ->withInput();
+        }
+
+        $data = $request->all();
+        $result = $registration->fill($data)->update();
+
+        if ($result) {
+            return redirect()
+                ->route('admin.printing-registrations.edit', $id)
+                ->with(['success' => 'Запис успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Помилка збереження запису."])
+                ->withInput();
+        }
     }
 
     /**

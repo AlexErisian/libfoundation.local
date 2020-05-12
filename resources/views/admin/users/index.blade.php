@@ -5,29 +5,38 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: користувачі</h5>
+                <a class="btn btn-secondary"
+                   href="{{ route('admin.users.create') }}">
+                    Створити новий
+                </a>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
-                        <td>Роль</td>
                         <td>Ім'я</td>
+                        <td>Роль</td>
+                        <td>Читацький квиток</td>
                         <td>Заблоковано</td>
-                        <td>Створено</td>
-                        <td>Оновлено</td>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($usersPagination as $user)
-                        @php /** @var \App\Models\user $user*/ @endphp
+                        @php /** @var \App\Models\User $user*/ @endphp
                         <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $user->role->name }}</td>
                             <td>
                                 <a class="card-link"
                                    href="{{ route('admin.users.edit', $user->id) }}">
                                     {{ $user->name }}
+                                </a>
+                            </td>
+                            <td>{{ $user->role->name }}</td>
+                            <td>
+                                <a class="card-link"
+                                   href="{{ route('admin.readercards.edit', $user->readercard->id) }}">
+                                    {{ $user->readercard->code }}
                                 </a>
                             </td>
                             <td>
@@ -37,8 +46,6 @@
                                     Ні
                                 @endif
                             </td>
-                            <td>{{ $user->created_at }}</td>
-                            <td>{{ $user->updated_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -18,7 +18,7 @@
                         <td>До якого видання</td>
                         <td>Користувач-автор</td>
                         <td class="d-none d-md-table-cell">Текст</td>
-                        <td class="d-none d-md-table-cell">Створено</td>
+                        <td class="d-none d-md-table-cell">Змінено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,16 +32,22 @@
                                 </a>
                             </td>
                             <td>
-                                {{ $comment->printing->title }}
+                                <a class="card-link"
+                                   href="{{ route('admin.printings.edit', $comment->printing->id) }}">
+                                    {{ $comment->printing->title }}
+                                </a>
                             </td>
                             <td>
-                                {{ $comment->user->name }}
+                                <a class="card-link"
+                                   href="{{ route('admin.users.edit', $comment->user->id) }}">
+                                    {{ $comment->user->name }}
+                                </a>
                             </td>
                             <td class="d-none d-md-table-cell">
                                 {{ $comment->text }}
                             </td>
                             <td class="d-none d-md-table-cell">
-                                {{ $comment->created_at }}
+                                {{ $comment->updated_at }}
                             </td>
                         </tr>
                     @endforeach

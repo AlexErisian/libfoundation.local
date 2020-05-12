@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('is_banned')->default(false);
             $table->rememberToken();
+            $table->text('notes')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

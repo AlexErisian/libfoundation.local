@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PrintingsTableSeeder::class);
         $this->call(PrintingGenreTableSeeder::class);
         $this->call(PrintingCommentsTableSeeder::class);
-        $this->call(LibraryPrintingTableSeeder::class);
+        $this->call(BookshelvesTableSeeder::class);
         $this->call(PrintingRegistrationsTableSeeder::class);
     }
 }

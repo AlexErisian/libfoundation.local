@@ -10,7 +10,7 @@ class PrintingComment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'text',
+        'printing_id', 'user_id', 'text',
     ];
 
     public function printing()

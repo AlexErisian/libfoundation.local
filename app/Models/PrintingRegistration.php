@@ -10,8 +10,13 @@ class PrintingRegistration extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'exemplars_registered_initially', 'notes',
+        'bookshelf_id', 'exemplars_registered_initially', 'notes',
     ];
+
+    public function bookshelf()
+    {
+        return $this->belongsTo(Bookshelf::class);
+    }
 
     public function user()
     {

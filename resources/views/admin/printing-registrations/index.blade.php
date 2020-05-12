@@ -5,23 +5,17 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: реєстрації видань</h5>
-                <a class="btn btn-secondary"
-                   href="{{ route('admin.printing-registrations.create') }}">
-                    Створити новий
-                </a>
             </div>
             <div class="card-body">
-                <table class="table table-hover">
+                <table class="table table-hover overflow-auto">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Користувач</td>
-                        <td>Ідентифікатор зв'язку</td>
-                        <td class="d-none d-table-cell">Екземплярів
-                            зареєстровано
-                        </td>
-                        <td class="d-none d-table-cell">Створено</td>
-                        <td class="d-none d-table-cell">Оновлено</td>
+                        <td>Ідентифікатор книжної шафи</td>
+                        <td class="d-none d-md-table-cell">Екземплярів зареєстровано</td>
+                        <td class="d-none d-md-table-cell">Створено</td>
+                        <td class="d-none d-md-table-cell">Оновлено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,13 +36,13 @@
                             </td>
                             <td>
                                 <a class="card-link"
-                                   href="{{ route('admin.library-printing-links.edit', $registration->library_printing_id) }}">
-                                    {{ $registration->library_printing_id }}
+                                   href="{{ route('admin.bookshelves.edit', $registration->bookshelf_id) }}">
+                                    {{ $registration->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-table-cell">{{ $registration->exemplars_registered_initially }}</td>
-                            <td class="d-none d-table-cell">{{ $registration->created_at }}</td>
-                            <td class="d-none d-table-cell">{{ $registration->updated_at }}</td>
+                            <td class="d-none d-md-table-cell">{{ $registration->exemplars_registered_initially }}</td>
+                            <td class="d-none d-md-table-cell">{{ $registration->created_at }}</td>
+                            <td class="d-none d-md-table-cell">{{ $registration->updated_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>

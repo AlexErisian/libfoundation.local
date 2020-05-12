@@ -17,7 +17,7 @@
                         <td>Ідентифікатор</td>
                         <td>Бібліотекар</td>
                         <td class="d-none d-table-cell">Код квитка</td>
-                        <td class="d-none d-table-cell">Ідентифікатор зв'язку</td>
+                        <td class="d-none d-table-cell">Ідентифікатор книжної шафи</td>
                         <td class="d-none d-table-cell">Позичено екземплярів</td>
                         <td>Коли позичено</td>
                         <td class="d-none d-table-cell">Строком до</td>
@@ -48,7 +48,7 @@
                             </td>
                             <td class="d-none d-table-cell">
                                 <a class="card-link"
-                                   href="{{ route('admin.library-printing-links.edit', $libraryService->readercard->id) }}">
+                                   href="{{ route('admin.bookshelves.edit', $libraryService->readercard->id) }}">
                                     {{ $libraryService->library_printing_id }}
                                 </a>
                             </td>

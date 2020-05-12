@@ -17,8 +17,7 @@ class CreateLibraryServicesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('readercard_id')->constrained();
-            $table->foreignId('library_printing_id')
-                ->constrained('library_printing');
+            $table->foreignId('bookshelf_id')->constrained();
             $table->integer('exemplars_given')->unsigned();
             $table->timestamp('given_up_to');
             $table->timestamp('returned_at')->nullable();

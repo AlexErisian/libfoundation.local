@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Library as Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Storage;
 
 class LibraryRepository extends CoreRepository
 {
@@ -13,19 +16,71 @@ class LibraryRepository extends CoreRepository
 
     /**
      * @param int $nbPerPage
-     * @return mixed
+     * @param bool $withTrashed
+     * @return LengthAwarePaginator
      */
-    public function getAllWithPagination($nbPerPage)
+    public function getAllWithPagination($nbPerPage = 15, $withTrashed = false)
     {
-        return Model::paginate($nbPerPage);
+        $columns = ['id', 'name', 'address'];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->withTrashed($withTrashed)
+            ->paginate($nbPerPage);
+    }
+
+    /**
+     * @param int $excludingId
+     * @return Collection
+     */
+    public function getSelectOptions($excludingId = 0)
+    {
+        $columns = ['id', 'name'];
+
+        return $this->startConditions()
+            ->where('id', '!=', $excludingId)
+            ->orderBy('name')
+            ->toBase()
+            ->get($columns);
     }
 
     /**
      * @param int $id
      * @return Model
      */
-    public function getForEdit($id)
+    public function getEdit($id)
     {
-        return Model::findOrFail($id);
+        return $this->startConditions()->find($id);
+    }
+
+    public function saveModel($requestData)
+    {
+        $model = $this->startConditions();
+
+        if (!empty($requestData['picture'])) {
+            $newPath = Storage::disk('public')
+                ->putFile('/images/libraries', $requestData['picture']);
+            $requestData['picture_path'] = $newPath;
+        }
+
+        return [
+            'succeed' => $model->fill($requestData)->save(),
+            'id' => $model->id,
+        ];
+    }
+
+    public function updateModel($model, $requestData)
+    {
+        if (!empty($requestData['picture'])) {
+            $newPath = Storage::disk('public')
+                ->putFile('/images/libraries', $requestData['picture']);
+            $oldPath = $model->picture_path;
+            if (!empty($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $requestData['picture_path'] = $newPath;
+        }
+
+        return $model->fill($requestData)->update();
     }
 }

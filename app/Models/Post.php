@@ -14,6 +14,10 @@ class Post extends Model
         'picture_path', 'is_published', 'published_at',
     ];
 
+    protected $casts = [
+        'is_published' => 'bool'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

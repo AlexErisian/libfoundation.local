@@ -10,6 +10,7 @@ class Printing extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
         'title', 'slug', 'publication_year',
         'isbn', 'annotation', 'picture_path',
     ];
@@ -35,5 +36,11 @@ class Printing extends Model
     public function comments()
     {
         return $this->hasMany(PrintingComment::class);
+    }
+
+    public function genres()
+    {
+        return $this->belongsToMany(PrintingGenre::class,
+            'printing_genre');
     }
 }

@@ -48,7 +48,7 @@
                             </td>
                             <td class="d-none d-md-table-cell">
                                 <a class="card-link"
-                                   href="{{ route('admin.printing-authors.edit', $printing->type->id) }}">
+                                   href="{{ route('admin.printing-types.edit', $printing->type->id) }}">
                                     {{ $printing->type->name }}
                                 </a>
                             </td>

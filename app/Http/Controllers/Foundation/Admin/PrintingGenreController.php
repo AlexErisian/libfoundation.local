@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers\Foundation\Admin;
 
+use App\Http\Requests\PrintingGenreFormRequest;
+use App\Models\PrintingGenre;
 use App\Repositories\PrintingGenreRepository;
-use Illuminate\Http\Request;
 
 class PrintingGenreController extends BaseController
 {
     /**
+     * @var PrintingGenreRepository
+     */
+    private $printingGenreRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->printingGenreRepository = app(PrintingGenreRepository::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param PrintingGenreRepository $repository
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(PrintingGenreRepository $repository)
+    public function index()
     {
-        $genresPagination = $repository->getAllWithPagination(15);
+        $genresPagination = $this->printingGenreRepository
+            ->getAllWithPagination(15);
         return view('admin.printing-genres.index',
             compact('genresPagination'));
     }
@@ -23,22 +35,36 @@ class PrintingGenreController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('admin.printing-genres.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param PrintingGenreFormRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PrintingGenreFormRequest $request)
     {
-        //
+        $genre = new PrintingGenre();
+
+        $data = $request->all();
+
+        $result = $genre->fill($data)->save();
+
+        if ($result) {
+            return redirect()
+                ->route('admin.printing-genres.edit', $genre->id)
+                ->with(['success' => 'Запис успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Помилка збереження запису."])
+                ->withInput();
+        }
     }
 
     /**
@@ -56,23 +82,46 @@ class PrintingGenreController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
-        //
+        $genre = $this->printingGenreRepository->getEdit($id);
+        if(empty($genre)) abort(404);
+        return view('admin.printing-genres.edit',
+            compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param PrintingGenreFormRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(PrintingGenreFormRequest $request, $id)
     {
-        //
+        $genre = $this->printingGenreRepository->getEdit($id);
+
+        if (empty($genre)) {
+            return back()
+                ->withErrors(['msg' => "Запис з ідентифікатором [{$id}] не знайдено."])
+                ->withInput();
+        }
+
+        $data = $request->all();
+
+        $result = $genre->fill($data)->save();
+
+        if ($result) {
+            return redirect()
+                ->route('admin.printing-genres.edit', $id)
+                ->with(['success' => 'Запис успішно збережено.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Помилка збереження запису."])
+                ->withInput();
+        }
     }
 
     /**

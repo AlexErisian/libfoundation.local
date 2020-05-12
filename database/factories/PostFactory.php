@@ -25,8 +25,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'slug' => Str::slug($title),
         'description' => $description,
         'content' => $content,
-        'picture_path' => $faker
-            ->imageUrl(640,480, 'people', true),
         'is_published' => $isPublished,
         'created_at' => $createdAt,
         'updated_at' => $createdAt,

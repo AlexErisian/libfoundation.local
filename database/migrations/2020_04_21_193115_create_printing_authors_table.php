@@ -16,8 +16,8 @@ class CreatePrintingAuthorsTable extends Migration
         Schema::create('printing_authors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamp('born_in')->nullable();
-            $table->timestamp('died_in')->nullable();
+            $table->date('born_in')->nullable();
+            $table->date('died_in')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

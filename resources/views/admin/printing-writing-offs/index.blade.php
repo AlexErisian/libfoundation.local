@@ -5,10 +5,6 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: списання видань</h5>
-                <a class="btn btn-secondary"
-                   href="{{ route('admin.printing-writing-offs.create') }}">
-                    Створити новий
-                </a>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
@@ -42,7 +38,7 @@
                             </td>
                             <td>
                                 <a class="card-link"
-                                   href="{{ route('admin.library-printing-links.edit', $writingOff->library_printing_id) }}">
+                                   href="{{ route('admin.bookshelves.edit', $writingOff->library_printing_id) }}">
                                     {{ $writingOff->library_printing_id }}
                                 </a>
                             </td>

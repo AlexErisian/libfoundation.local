@@ -16,8 +16,7 @@ class CreatePrintingWritingOffsTable extends Migration
         Schema::create('printing_writing_offs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('library_printing_id')
-                ->constrained('library_printing');
+            $table->foreignId('bookshelf_id')->constrained();
             $table->integer('exemplars_written_off')->unsigned();
             $table->text('notes')->nullable();
             $table->timestamps();

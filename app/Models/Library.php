@@ -10,6 +10,6 @@ class Library extends Model
     use SoftDeletes;
 
     protected $fillable = [
-       'name', 'address', 'notes',
+       'name', 'address', 'notes', 'picture_path'
     ];
 }

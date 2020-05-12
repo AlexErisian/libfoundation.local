@@ -19,49 +19,43 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Foundation'], function () {
     Route::resource('posts', 'PostController')
         ->only(['index', 'show']);
 });
 
-Route::group(['namespace' => 'Foundation\Admin',
-    'prefix' => 'admin',],
-    function () {
-        Route::get('/', 'BaseController@panel')
-            ->name('admin.panel');
-        Route::resource('libraries', 'LibraryController')
-            ->names('admin.libraries');
-        Route::resource('printing-authors', 'PrintingAuthorController')
-            ->names('admin.printing-authors');
-        Route::resource('printing-genres', 'PrintingGenreController')
-            ->names('admin.printing-genres');
-        Route::resource('printing-pubhouses', 'PrintingPubhouseController')
-            ->names('admin.printing-pubhouses');
-        Route::resource('printing-types', 'PrintingTypeController')
-            ->names('admin.printing-types');
-        Route::resource('printings', 'PrintingController')
-            ->names('admin.printings');
-        Route::resource('printing-comments', 'PrintingCommentController')
-            ->names('admin.printing-comments');
-        Route::resource('printing-registrations', 'PrintingRegistrationController')
-            ->names('admin.printing-registrations');
-        Route::resource('printing-writing-offs', 'PrintingWritingOffController')
-            ->names('admin.printing-writing-offs');
-        Route::resource('readercards', 'ReadercardController')
-            ->names('admin.readercards');
-        Route::resource('roles', 'RoleController')
-            ->only(['index'])
-            ->names('admin.roles');
-        Route::resource('users', 'UserController')
-            ->names('admin.users');
-        Route::resource('posts', 'PostController')
-            ->names('admin.posts');
-        Route::resource('library-printing-links', 'LibraryPrintingLinkController')
-            ->names('admin.library-printing-links');
-        Route::resource('printing-genre-links', 'PrintingGenreLinkController')
-            ->names('admin.printing-genre-links');
-        Route::resource('library-services', 'LibraryServiceController')
-            ->names('admin.library-services');
-    });
+Route::name('admin.')->group(function () {
+    Route::group([
+        'namespace' => 'Foundation\Admin',
+        'prefix' => 'admin',
+        'middleware' => 'role:admin',
+    ],
+        function () {
+            Route::get('/', 'BaseController@panel')->name('panel');
+            Route::resource('libraries', 'LibraryController');
+            Route::resource('printing-authors', 'PrintingAuthorController');
+            Route::resource('printing-genres', 'PrintingGenreController');
+            Route::resource('printing-pubhouses', 'PrintingPubhouseController');
+            Route::resource('printing-types', 'PrintingTypeController');
+            Route::resource('printings', 'PrintingController');
+            Route::resource('printing-comments', 'PrintingCommentController');
+            Route::resource('printing-registrations', 'PrintingRegistrationController')
+                ->only(['index', 'edit', 'update']);
+            Route::resource('printing-writing-offs', 'PrintingWritingOffController')
+                ->only(['index', 'edit', 'update']);
+            Route::resource('readercards', 'ReadercardController');
+            Route::resource('roles', 'RoleController')
+                ->only(['index']);
+            Route::resource('users', 'UserController');
+            Route::resource('posts', 'PostController');
+            Route::resource('bookshelves', 'BookshelfController');
+            Route::resource('printing-genre-links', 'PrintingGenreLinkController')
+                ->only(['index']);
+            Route::resource('library-services', 'LibraryServiceController')
+                ->only(['index', 'edit', 'update']);
+        });
+});
+
+

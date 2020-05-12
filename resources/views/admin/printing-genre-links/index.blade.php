@@ -5,10 +5,6 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: зв'язки "видання-жанр"</h5>
-                <a class="btn btn-secondary"
-                   href="{{ route('admin.printing-genre-links.create') }}">
-                    Створити новий
-                </a>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
@@ -22,12 +18,7 @@
                     <tbody>
                     @foreach($linksPagination as $link)
                         <tr>
-                            <td>
-                                <a class="card-link"
-                                   href="{{ route('admin.printing-genre-links.edit', $link->id) }}">
-                                    {{ $link->id }}
-                                </a>
-                            </td>
+                            <td>{{ $link->id }}</td>
                             <td>
                                 <a class="card-link"
                                    href="{{ route('admin.printings.edit', $link->printing_id) }}">

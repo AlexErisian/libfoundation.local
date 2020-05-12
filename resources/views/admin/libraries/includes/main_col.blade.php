@@ -19,30 +19,59 @@
                    data-toggle="tab">Інші дані</a>
             </li>
         </ul>
+        <br>
         <div class="tab-content">
             <div id="mainData" class="tab-pane active" role="tabpanel">
                 <div class="form-group">
                     <label for="name">Назва</label>
-                    <input class="form-control" type="text" id="name">
+                    <input class="form-control"
+                           type="text"
+                           id="name"
+                           name="name"
+                           required
+                           value="{{ old('name', $library->name) }}">
                 </div>
                 <div class="form-group">
                     <label for="address">Адреса</label>
-                    <input class="form-control" type="text" id="address">
+                    <input class="form-control"
+                           type="text"
+                           id="address"
+                           name="address"
+                           required
+                           value="{{ old('address', $library->address) }}">
                 </div>
             </div>
             <div id="addData" class="tab-pane" role="tabpanel">
                 <div class="form-group">
                     <label for="notes">Примітки</label>
-                    <textarea class="form-control" id="notes" rows="3"></textarea>
+                    <textarea class="form-control"
+                              id="notes"
+                              name="notes"
+                              rows="3">{{ old('notes', $library->notes) }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="picture">Фотографія будівлі</label>
-                    <input class="form-control-file" type="file" id="picture">
+                    @if(!empty($library->picture_path))
+                        <br>
+                        <img src="{{ asset('storage/'.$library->picture_path) }}"
+                             class="img-thumbnail mb-3"
+                             width="50%"
+                             alt="Зображення бібліотеки">
+                    @endif
+                    <input class="form-control-file"
+                           id="picture"
+                           name="picture"
+                           type="file"
+                           accept="image/*">
                 </div>
             </div>
         </div>
     </div>
     <div class="card-footer">
         <button class="btn btn-primary" type="submit">Зберегти</button>
+        <a class="btn btn-danger"
+           href="{{ route('admin.libraries.destroy', $library->id) }}">
+            Видалити запис
+        </a>
     </div>
 </div>

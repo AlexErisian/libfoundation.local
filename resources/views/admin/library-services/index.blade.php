@@ -5,10 +5,6 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: позичання видань</h5>
-                <a class="btn btn-secondary"
-                   href="{{ route('admin.library-services.create') }}">
-                    Створити новий
-                </a>
             </div>
             <div class="card-body">
                 <table class="table table-hover">
@@ -16,12 +12,12 @@
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Бібліотекар</td>
-                        <td class="d-none d-table-cell">Код квитка</td>
-                        <td class="d-none d-table-cell">Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-table-cell">Позичено екземплярів</td>
-                        <td>Коли позичено</td>
-                        <td class="d-none d-table-cell">Строком до</td>
-                        <td>Коли повернено</td>
+                        <td>Код квитка</td>
+                        <td>Ідентифікатор книжної шафи</td>
+                        <td class="d-none d-md-table-cell">Позичено екземплярів</td>
+                        <td class="d-none d-md-table-cell">Коли позичено</td>
+                        <td class="d-none d-md-table-cell">Строком до</td>
+                        <td class="d-none d-md-table-cell">Коли повернено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,28 +36,28 @@
                                     {{ $libraryService->user->name }}
                                 </a>
                             </td>
-                            <td class="d-none d-table-cell">
+                            <td>
                                 <a class="card-link"
                                    href="{{ route('admin.readercards.edit', $libraryService->readercard->id) }}">
                                     {{ $libraryService->readercard->code }}
                                 </a>
                             </td>
-                            <td class="d-none d-table-cell">
+                            <td>
                                 <a class="card-link"
-                                   href="{{ route('admin.bookshelves.edit', $libraryService->readercard->id) }}">
-                                    {{ $libraryService->library_printing_id }}
+                                   href="{{ route('admin.bookshelves.edit', $libraryService->bookshelf_id) }}">
+                                    {{ $libraryService->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-table-cell">
+                            <td class="d-none d-md-table-cell">
                                 {{ $libraryService->exemplars_given }}
                             </td>
-                            <td>
+                            <td class="d-none d-md-table-cell">
                                 {{ $libraryService->created_at }}
                             </td>
-                            <td class="d-none d-table-cell">
+                            <td class="d-none d-md-table-cell">
                                 {{ $libraryService->given_up_to }}
                             </td>
-                            <td>
+                            <td class="d-none d-md-table-cell">
                                 {{ $libraryService->returned_at }}
                             </td>
                         </tr>

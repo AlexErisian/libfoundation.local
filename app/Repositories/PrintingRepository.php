@@ -6,7 +6,7 @@ use App\Models\Printing as Model;
 use Illuminate\Support\Collection;
 use Storage;
 
-class PrintingRepository extends CoreRepository
+class PrintingRepository extends BaseRepository
 {
     protected function getModelClass()
     {

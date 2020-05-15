@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\PrintingPubhouse as Model;
 use Illuminate\Support\Collection;
 
-class PrintingPubhouseRepository extends CoreRepository
+class PrintingPubhouseRepository extends BaseRepository
 {
     protected function getModelClass()
     {

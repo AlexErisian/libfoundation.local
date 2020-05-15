@@ -12,4 +12,14 @@ class Library extends Model
     protected $fillable = [
        'name', 'address', 'notes', 'picture_path'
     ];
+
+    public function bookshelves()
+    {
+        return $this->hasMany(Bookshelf::class);
+    }
+
+    public function libraryServices()
+    {
+        return $this->hasManyThrough(LibraryService::class, Bookshelf::class);
+    }
 }

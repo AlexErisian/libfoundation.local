@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\LibraryService;
 use App\Models\Post;
 use App\Models\Printing;
 use App\Models\PrintingComment;
+use App\Observers\LibraryServiceObserver;
 use App\Observers\PostObserver;
 use App\Observers\PrintingCommentObserver;
 use App\Observers\PrintingObserver;
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Post::observe(PostObserver::class);
         Printing::observe(PrintingObserver::class);
         PrintingComment::observe(PrintingCommentObserver::class);
+        LibraryService::observe(LibraryServiceObserver::class);
     }
 }

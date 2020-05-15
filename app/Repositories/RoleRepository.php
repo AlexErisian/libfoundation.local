@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Role as Model;
 
-class RoleRepository extends CoreRepository
+class RoleRepository extends BaseRepository
 {
     protected function getModelClass()
     {

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Bookshelf as Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class BookshelfRepository extends CoreRepository
+class BookshelfRepository extends BaseRepository
 {
     protected function getModelClass()
     {
@@ -27,6 +27,21 @@ class BookshelfRepository extends CoreRepository
             ->select($columns)
             ->with($relations)
             ->withTrashed($withTrashed)
+            ->paginate($nbPerPage);
+    }
+
+    public function getAllByLibraryId($libraryId, $nbPerPage = 15)
+    {
+        $columns = ['id', 'library_id', 'printing_id',
+            'exemplars_registered', 'exemplars_in_stock',
+            'shelf_number', 'shelf_floor'];
+        $relations = ['printing:id,title'];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->where('library_id', $libraryId)
+            ->with($relations)
+            ->orderBy('shelf_number', 'asc')
             ->paginate($nbPerPage);
     }
 

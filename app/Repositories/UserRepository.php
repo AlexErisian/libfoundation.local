@@ -6,7 +6,7 @@ use App\Models\User as Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
-class UserRepository extends CoreRepository
+class UserRepository extends BaseRepository
 {
     protected function getModelClass()
     {

@@ -26,11 +26,28 @@ Route::group(['namespace' => 'Foundation'], function () {
         ->only(['index', 'show']);
 });
 
+Route::name('librarian.')->group(function () {
+    Route::group([
+        'namespace' => 'Foundation\Librarian',
+        'prefix' => 'librarian',
+        'middleware' => 'role:librarian',
+    ],
+        function () {
+            Route::get('/', 'BaseController@panel')->name('panel');
+            Route::post('/', 'BaseController@setWorkingLibrary')->name('set-lib');
+            Route::delete('/', 'BaseController@unsetWorkingLibrary')->name('unset-lib');
+            Route::get('service', 'ServiceMovementController@listOptions')->name('service.options');
+            Route::get('service/{bookshelf}', 'ServiceMovementController@specifyService')->name('service.specify');
+            Route::post('service', 'ServiceMovementController@confirmService')->name('service.confirm');
+            Route::get('service/get-back/{readercard?}', 'ServiceMovementController@listGetBack')->name('service.get-back');
+            //Route::resource('library-services', 'LibraryServiceController');
+        });
+});
+
 Route::name('admin.')->group(function () {
     Route::group([
         'namespace' => 'Foundation\Admin',
         'prefix' => 'admin',
-        'middleware' => 'role:admin',
     ],
         function () {
             Route::get('/', 'BaseController@panel')->name('panel');

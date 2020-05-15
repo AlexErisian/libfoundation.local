@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Storage;
 
-class LibraryRepository extends CoreRepository
+class LibraryRepository extends BaseRepository
 {
     protected function getModelClass()
     {

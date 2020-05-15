@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\PrintingRegistration as Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class PrintingRegistrationRepository extends CoreRepository
+class PrintingRegistrationRepository extends BaseRepository
 {
     protected function getModelClass()
     {

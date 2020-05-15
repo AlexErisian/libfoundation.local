@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\PrintingComment as Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class PrintingCommentRepository extends CoreRepository
+class PrintingCommentRepository extends BaseRepository
 {
     protected function getModelClass()
     {

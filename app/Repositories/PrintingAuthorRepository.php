@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\PrintingAuthor as Model;
 use Illuminate\Support\Collection;
 
-class PrintingAuthorRepository extends CoreRepository
+class PrintingAuthorRepository extends BaseRepository
 {
     protected function getModelClass()
     {

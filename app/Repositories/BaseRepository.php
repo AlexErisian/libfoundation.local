@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 
-abstract class CoreRepository
+abstract class BaseRepository
 {
     /**
      * @var Model

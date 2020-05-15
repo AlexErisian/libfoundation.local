@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Readercard as Model;
 
-class ReadercardRepository extends CoreRepository
+class ReadercardRepository extends BaseRepository
 {
     protected function getModelClass()
     {
@@ -34,6 +34,16 @@ class ReadercardRepository extends CoreRepository
     {
         return $this->startConditions()
             ->find($id);
+    }
+
+    /**
+     * @param int $code
+     * @return int
+     */
+    public function getIdByCode($code)
+    {
+        return $this->startConditions()
+            ->firstWhere('code', $code)->id;
     }
 
     public function getSelectOptions($excludingId = 0)

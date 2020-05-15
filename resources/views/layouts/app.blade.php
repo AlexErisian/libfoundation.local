@@ -108,8 +108,8 @@
                                 @if(auth()->user()->role->name === 'librarian'
                                  || auth()->user()->role->name === 'admin')
                                     <li class="nav-item">
-                                        <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                           href="">
+                                        <a class="nav-link @if(URL::current() == route('librarian.panel')) active @endif"
+                                           href="{{ route('librarian.panel') }}">
                                             {{ __('Панель бібліотекара') }}
                                         </a>
                                     </li>

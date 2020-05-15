@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Post as Model;
 use Storage;
 
-class PostRepository extends CoreRepository
+class PostRepository extends BaseRepository
 {
     protected function getModelClass()
     {

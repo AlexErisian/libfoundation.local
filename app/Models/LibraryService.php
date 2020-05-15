@@ -10,6 +10,7 @@ class LibraryService extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'readercard_id', 'bookshelf_id',
         'exemplars_given', 'given_up_to', 'returned_at',
     ];
 
@@ -21,5 +22,10 @@ class LibraryService extends Model
     public function readercard()
     {
         return $this->belongsTo(Readercard::class);
+    }
+
+    public function bookshelf()
+    {
+        return $this->belongsTo(Bookshelf::class);
     }
 }

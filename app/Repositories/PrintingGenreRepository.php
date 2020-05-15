@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\PrintingGenre as Model;
 use Illuminate\Support\Collection;
 
-class PrintingGenreRepository extends CoreRepository
+class PrintingGenreRepository extends BaseRepository
 {
     protected function getModelClass()
     {

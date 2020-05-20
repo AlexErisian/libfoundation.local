@@ -22,4 +22,14 @@ class Library extends Model
     {
         return $this->hasManyThrough(LibraryService::class, Bookshelf::class);
     }
+
+    public function printingRegistrations()
+    {
+        return $this->hasManyThrough(PrintingRegistration::class,Bookshelf::class);
+    }
+
+    public function printingWritingOffs()
+    {
+        return $this->hasManyThrough(PrintingWritingOff::class,Bookshelf::class);
+    }
 }

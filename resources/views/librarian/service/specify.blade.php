@@ -7,7 +7,7 @@
         @csrf
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="card-title">Введіть остаточні дані для позичання</h4>
+                <h4 class="card-title">Остаточні дані для позичання</h4>
             </div>
             <div class="card-body">
                 @php /** @var \App\Models\Bookshelf $bookshelf */ @endphp

@@ -31,11 +31,6 @@ class LibraryServiceRepository extends BaseRepository
             ->paginate($nbPerPage);
     }
 
-    public function getServiceGetBackOptions($libraryId, $readercardId = 0, $nbPerPage = 15)
-    {
-        //TODO: has many through
-    }
-
     /**
      * @param int $id
      * @return Model

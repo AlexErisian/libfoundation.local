@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Printing as Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Storage;
 
@@ -11,6 +12,90 @@ class PrintingRepository extends BaseRepository
     protected function getModelClass()
     {
         return Model::class;
+    }
+
+    public function applyFilter($requestData)
+    {
+        $columns = [
+            'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
+            'title', 'publication_year', 'isbn',
+            'annotation', 'picture_path',
+        ];
+        $relations = [
+            'author:id,name',
+            'pubhouse:id,name',
+            'type:id,name',
+            'genres'
+        ];
+
+        $whereConditions = [];
+
+        if ($requestData['printing_author_id'] > 0) {
+            $whereConditions[] = [
+                'printing_author_id',
+                '=',
+                $requestData['printing_author_id']
+            ];
+        }
+        if ($requestData['printing_pubhouse_id'] > 0) {
+            $whereConditions[] = [
+                'printing_pubhouse_id',
+                '=',
+                $requestData['printing_pubhouse_id']
+            ];
+        }
+        if ($requestData['printing_type_id'] > 0) {
+            $whereConditions[] = [
+                'printing_type_id',
+                '=',
+                $requestData['printing_type_id']
+            ];
+        }
+
+        return $this->startConditions()
+            ->select($columns)
+            ->where($whereConditions)
+            ->with($relations)
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+    }
+
+    public function getForMainPage($count)
+    {
+        $columns = [
+            'id', 'printing_author_id',
+            'title', 'publication_year', 'annotation', 'picture_path',
+            'created_at'
+        ];
+        $relations = ['author:id,name',];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->with($relations)
+            ->orderBy('id', 'desc')
+            ->take($count)
+            ->get();
+    }
+
+    public function getForIndexPage($nbPerPage)
+    {
+        $columns = [
+            'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
+            'title', 'publication_year', 'isbn',
+            'annotation', 'picture_path',
+        ];
+        $relations = [
+            'author:id,name',
+            'pubhouse:id,name',
+            'type:id,name',
+            'genres'
+        ];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->with($relations)
+            ->orderBy('id', 'desc')
+            ->paginate($nbPerPage);
     }
 
     /**
@@ -22,7 +107,8 @@ class PrintingRepository extends BaseRepository
     {
         $columns = [
             'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
-            'title', 'publication_year', 'isbn'];
+            'title', 'publication_year', 'isbn'
+        ];
         $relations = [
             'author:id,name',
             'pubhouse:id,name',
@@ -58,6 +144,29 @@ class PrintingRepository extends BaseRepository
     public function getEdit($id)
     {
         return $this->startConditions()->find($id);
+    }
+
+    /**
+     * @param string $title
+     * @param int $nbPerPage
+     * @return LengthAwarePaginator
+     */
+    public function getAllWithTitleLike($title, $nbPerPage = 15)
+    {
+        $columns = [
+            'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
+            'title', 'publication_year', 'isbn'];
+        $relations = [
+            'author:id,name',
+            'pubhouse:id,name',
+            'type:id,name',];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->where('title', 'like', '%' . $title . '%')
+            ->with($relations)
+            ->orderBy('id', 'desc')
+            ->paginate($nbPerPage);
     }
 
     /**

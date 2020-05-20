@@ -38,12 +38,14 @@ class ReadercardRepository extends BaseRepository
 
     /**
      * @param int $code
-     * @return int
+     * @return int|null
      */
     public function getIdByCode($code)
     {
-        return $this->startConditions()
-            ->firstWhere('code', $code)->id;
+        $readercard = $this->startConditions()
+            ->firstWhere('code', $code);
+
+        return empty($readercard) ? null : $readercard->id;
     }
 
     public function getSelectOptions($excludingId = 0)

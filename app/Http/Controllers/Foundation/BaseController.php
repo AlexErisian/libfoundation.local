@@ -7,5 +7,7 @@ use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
 {
-    //
+    public function __construct()
+    {
+    }
 }

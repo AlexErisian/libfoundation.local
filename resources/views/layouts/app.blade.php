@@ -87,14 +87,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                   href="">
+                                <a class="nav-link @if(URL::current() == route('printings.index')) active @endif"
+                                   href="{{ route('printings.index') }}">
                                     {{ __('Друковані видання') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                   href="">
+                                <a class="nav-link @if(URL::current() == route('libraries.index')) active @endif"
+                                   href="{{ route('libraries.index') }}">
                                     {{ __('Бібліотеки') }}
                                 </a>
                             </li>
@@ -133,8 +133,9 @@
 </div>
 <footer class="d-block mt-auto">
     <div class="w-100 p-3 bg-primary text-white text-center">
-        <h5>Бібліотечна система {{ config('app.name') }} (c) 2020 | Developed by
-            garabox@ukr.net</h5>
+        <h5>
+            Бібліотечна система {{ config('app.name') }} &copy; 2020 | Developed by garabox@ukr.net
+        </h5>
     </div>
 </footer>
 </body>

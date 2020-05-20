@@ -125,10 +125,20 @@ class LibraryController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $library = $this->libraryRepository->getEdit($id);
+        $libraryDeleted = $library->delete();
+
+        if ($libraryDeleted ) {
+            return redirect()
+                ->route('admin.libraries.index')
+                ->with(['success' => 'Запис про бібліотеку успішно вилучено з обліку.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Не вдалося видалити запис.']);
+        }
     }
 }

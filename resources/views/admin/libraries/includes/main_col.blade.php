@@ -68,10 +68,10 @@
         </div>
     </div>
     <div class="card-footer">
-        <button class="btn btn-primary" type="submit">Зберегти</button>
-        <a class="btn btn-danger"
-           href="{{ route('admin.libraries.destroy', $library->id) }}">
-            Видалити запис
-        </a>
+        <button class="btn btn-primary"
+                form="editItem"
+                type="submit">
+            Зберегти
+        </button>
     </div>
 </div>

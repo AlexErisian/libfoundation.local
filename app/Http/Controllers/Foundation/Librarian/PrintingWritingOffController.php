@@ -2,23 +2,43 @@
 
 namespace App\Http\Controllers\Foundation\Librarian;
 
+use App\Repositories\LibraryRepository;
+use App\Repositories\PrintingWritingOffRepository;
 use Illuminate\Http\Request;
 
 class PrintingWritingOffController extends BaseController
 {
+    /**
+     * @var LibraryRepository
+     */
+    private $libraryRepository;
+
+    /**
+     * @var PrintingWritingOffRepository
+     */
+    private $printingWritingOffRepository;
+
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('library');
+        $this->libraryRepository = app(LibraryRepository::class);
+        $this->printingWritingOffRepository = app(PrintingWritingOffRepository::class);
+
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        //
+        $printingWritingOffsPagination = $this->libraryRepository
+            ->getAllWritingOffsInLibrary(session('working_library_id'));
+
+        return view('librarian.printing-writing-offs.index',
+            compact('printingWritingOffsPagination'));
     }
 
     /**
@@ -46,11 +66,15 @@ class PrintingWritingOffController extends BaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $printingWritingOff = $this->printingWritingOffRepository->getEdit($id);
+        if(empty($printingWritingOff)) abort(404);
+
+        return view('librarian.printing-writing-offs.show',
+            compact('printingWritingOff'));
     }
 
     /**

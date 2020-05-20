@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form class="w-100"
                       method="POST"
-                      action="{{ route('') }}">
+                      action="{{ route('librarian.service.redirect-code') }}">
                     @csrf
                     <div class="form-group">
                         <label for="readercard_code">Код читацького квитка</label>
@@ -22,13 +22,13 @@
                     </div>
                     <button class="btn btn-primary"
                             type="submit">
-                        Вивести позичання за читацьким квитком
+                        Вивести позичені видання за читацьким квитком
                     </button>
                 </form>
             </div>
             <div class="card-footer">
                 <a class="btn btn-secondary"
-                   href="">
+                   href="{{ route('librarian.service.get-back') }}">
                     Повернути позичені видання з загального переліку
                 </a>
             </div>

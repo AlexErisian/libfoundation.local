@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Foundation\Librarian;
 
+use App\Models\Bookshelf;
 use App\Repositories\BookshelfRepository;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class BookshelfController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('library');
         $this->bookshelfRepository = app(BookshelfRepository::class);
     }
 
@@ -26,9 +28,11 @@ class BookshelfController extends BaseController
     public function index()
     {
         $libraryId = session('working_library_id');
-        $bookshelves = $this->bookshelfRepository
+        $bookshelvesPagination = $this->bookshelfRepository
             ->getAllByLibraryId($libraryId);
-        dd($bookshelves);
+
+        return view('librarian.bookshelves.index',
+            compact('bookshelvesPagination'));
     }
 
     /**
@@ -56,11 +60,15 @@ class BookshelfController extends BaseController
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $bookshelf = Bookshelf::withTrashed()->find($id);
+        if(empty($bookshelf)) abort(404);
+
+        return view('librarian.bookshelves.show',
+            compact('bookshelf'));
     }
 
     /**

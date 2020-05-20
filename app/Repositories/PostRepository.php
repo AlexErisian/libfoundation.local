@@ -13,6 +13,25 @@ class PostRepository extends BaseRepository
     }
 
     /**
+     * @param int $count
+     * @return mixed
+     */
+    public function getForMainPage($count)
+    {
+        $columns = ['id', 'user_id', 'title',
+            'is_published', 'published_at', 'description', 'picture_path'];
+        $relations = ['user:id,name'];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->with($relations)
+            ->where('is_published', 1)
+            ->orderBy('published_at', 'desc')
+            ->take($count)
+            ->get();
+    }
+
+    /**
      * @param int $nbPerPage
      * @param bool $withTrashed
      * @return mixed

@@ -1,4 +1,4 @@
-<form class="col"
+<form class="w-100"
       method="POST"
       action="{{ route('librarian.set-lib') }}">
     @csrf

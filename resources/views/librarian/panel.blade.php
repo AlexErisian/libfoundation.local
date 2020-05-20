@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(empty(session('working_library_id')))
-        @include('librarian.includes.set-lib')
-    @else
-        <div class="col">
-            @include('messages.result')
+    <div class="col">
+        @include('messages.result')
+        @if(empty(session('working_library_id')))
+            @include('librarian.includes.set-lib')
+        @else
+
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h4 class="card-title">Панель бібліотекара</h4>
@@ -15,88 +16,79 @@
                     @include('librarian.includes.unset-lib')
                 </div>
                 <div class="card-body">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 col-md-4 col-sm-5">
-                            <ul class="navbar-nav nav-pills">
-                                <li class="nav-item">
-                                    <h5 class="card-title">Управління виданнями</h5>
-                                </li>
-                                <li class="nav-item my-1">
-                                    <a class="nav-link btn btn-outline-primary"
-                                       href="{{ route('librarian.service.options') }}">
-                                        Позичити видання читачеві
-                                    </a>
-                                </li>
-                                <li class="nav-item my-1">
-                                    <a class="nav-link btn btn-outline-primary"
-                                       href="">
-                                        Повернути видання до сховища
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-success my-1"
-                                       href="">
-                                        Зареєструвати нове видання
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-danger my-1"
-                                       href="">
-                                        Списати видання
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <h5 class="card-title mt-2">Переглянути
-                                        записи</h5>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Видання, що зберігаються
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Позичені видання
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Реєстрації видань
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Списання видань
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <h5 class="card-title mt-2">Додаткові
-                                        дії</h5>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Видати читацький квиток
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-secondary my-1"
-                                       href="">
-                                        Перевірити заборгованість
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col">
-                            Stat content
-                        </div>
-                    </div>
+                    <h5 class="card-title">Управління виданнями</h5>
+                    <ul class="nav">
+                        <li class="nav-item m-1">
+                            <a class="nav-link btn btn-outline-primary"
+                               href="{{ route('librarian.service.options') }}">
+                                Позичити видання читачеві
+                            </a>
+                        </li>
+                        <li class="nav-item m-1">
+                            <a class="nav-link btn btn-outline-primary"
+                               href="{{ route('librarian.service.enter-code') }}">
+                                Повернути видання до сховища
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-success m-1"
+                               href="{{ route('librarian.registration.enter-title') }}">
+                                Зареєструвати нове видання
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-danger m-1"
+                               href="{{ route('librarian.registration.write-off') }}">
+                                Списати видання
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="w-100">
+                    <h5 class="card-title mt-2">Переглянути облікові дані</h5>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="{{ route('librarian.bookshelves.index') }}">
+                                Перелік видань, що зберігаються
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="{{ route('librarian.library-services.index') }}">
+                                Перелік позичених видань
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="{{ route('librarian.printing-registrations.index') }}">
+                                Перелік записів про реєстрацію видань
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="{{ route('librarian.printing-writing-offs.index') }}">
+                                Перелік записів про списання видань
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="w-100">
+                    <h5 class="card-title mt-2">Додаткові дії</h5>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="">
+                                Видати читацький квиток
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary m-1"
+                               href="">
+                                Перевірити заборгованість читача
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
+    </div>
 @endsection

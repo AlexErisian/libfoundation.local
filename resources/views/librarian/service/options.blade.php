@@ -4,7 +4,7 @@
     <div class="col">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="card-title">Виберіть видання для позичання</h4>
+                <h4 class="card-title">Вибір видання для позичання</h4>
                 <h5 class="card-subtitle">
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>

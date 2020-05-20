@@ -2,27 +2,42 @@
 
 namespace App\Http\Controllers\Foundation\Librarian;
 
-use App\Repositories\BookshelfRepository;
+use App\Repositories\LibraryRepository;
+use App\Repositories\LibraryServiceRepository;
 use Illuminate\Http\Request;
 
 class LibraryServiceController extends BaseController
 {
-    private $bookshelfRepository;
+    /**
+     * @var LibraryRepository
+     */
+    private $libraryRepository;
+
+    /**
+     * @var LibraryServiceRepository
+     */
+    private $libraryServiceRepository;
 
     public function __construct()
     {
         parent::__construct();
-        $this->bookshelfRepository = app(BookshelfRepository::class);
+        $this->middleware('library');
+        $this->libraryRepository = app(LibraryRepository::class);
+        $this->libraryServiceRepository = app(LibraryServiceRepository::class);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        //
+        $libraryServicesPagination = $this->libraryRepository
+            ->getAllServicesInLibrary(session('working_library_id'));
+
+        return view('librarian.library-services.index',
+            compact('libraryServicesPagination'));
     }
 
     /**
@@ -50,11 +65,15 @@ class LibraryServiceController extends BaseController
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $libraryService = $this->libraryServiceRepository->getEdit($id);
+        if(empty($libraryService)) abort(404);
+
+        return view('librarian.library-services.show',
+            compact('libraryService'));
     }
 
     /**

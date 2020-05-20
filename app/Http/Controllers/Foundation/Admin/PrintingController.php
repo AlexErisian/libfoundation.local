@@ -57,6 +57,7 @@ class PrintingController extends BaseController
     {
         $printingsPagination = $this->printingRepository
             ->getAllWithPagination(10);
+
         return view('admin.printings.index',
             compact('printingsPagination'));
     }

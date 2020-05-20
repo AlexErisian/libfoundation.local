@@ -31,4 +31,17 @@
             </div>
         </div>
     </div>
+@elseif(session('not_found'))
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="alert alert-warning alert-dismissible my-2"
+                 role="alert">
+                {{ session('not_found') }}
+                <button type="button" class="close"
+                        data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
 @endif

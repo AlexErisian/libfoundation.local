@@ -35,7 +35,6 @@
             @method('DELETE')
             @csrf
             <button class="btn btn-outline-danger"
-                    form="editItem"
                     type="submit">
                 Видалити запис
             </button>

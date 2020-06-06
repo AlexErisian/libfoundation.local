@@ -41,6 +41,7 @@ class LibraryRepository extends BaseRepository
         return $this->startConditions()
             ->select($columns)
             ->withTrashed($withTrashed)
+            ->orderBy('id', 'desc')
             ->paginate($nbPerPage);
     }
 

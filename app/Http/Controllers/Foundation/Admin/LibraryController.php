@@ -132,7 +132,7 @@ class LibraryController extends BaseController
         $library = $this->libraryRepository->getEdit($id);
         $libraryDeleted = $library->delete();
 
-        if ($libraryDeleted ) {
+        if ($libraryDeleted) {
             return redirect()
                 ->route('admin.libraries.index')
                 ->with(['success' => 'Запис про бібліотеку успішно вилучено з обліку.']);

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Printing as Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Storage;
@@ -14,7 +15,12 @@ class PrintingRepository extends BaseRepository
         return Model::class;
     }
 
-    public function applyFilter($requestData)
+    /**
+     * @param array $requestData
+     * @param int $nbPerPage
+     * @return LengthAwarePaginator
+     */
+    public function applyFilter($requestData, $nbPerPage = 10)
     {
         $columns = [
             'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
@@ -29,35 +35,50 @@ class PrintingRepository extends BaseRepository
         ];
 
         $whereConditions = [];
-
-        if ($requestData['printing_author_id'] > 0) {
+        if ($requestData['printing_author_id'] ?? 0 >= 1) {
             $whereConditions[] = [
                 'printing_author_id',
                 '=',
                 $requestData['printing_author_id']
             ];
         }
-        if ($requestData['printing_pubhouse_id'] > 0) {
+        if ($requestData['printing_pubhouse_id'] ?? 0 >= 1) {
             $whereConditions[] = [
                 'printing_pubhouse_id',
                 '=',
                 $requestData['printing_pubhouse_id']
             ];
         }
-        if ($requestData['printing_type_id'] > 0) {
+        if ($requestData['printing_type_id'] ?? 0 >= 1) {
             $whereConditions[] = [
                 'printing_type_id',
                 '=',
                 $requestData['printing_type_id']
             ];
         }
+        if (!empty($requestData['printing_title'])) {
+            $whereConditions[] = [
+                'title',
+                'like',
+                '%'.$requestData['printing_title'].'%'
+            ];
+        }
 
-        return $this->startConditions()
+        $pagination = $this->startConditions()
             ->select($columns)
             ->where($whereConditions)
-            ->with($relations)
+            ->with($relations);
+
+        if (!empty($requestData['genre_ids'])) {
+            $ids = $requestData['genre_ids'];
+            $pagination->whereHas('genres', function (Builder $query) use ($ids) {
+                $query->whereIn('printing_genres.id', $ids);
+            }, '>=', count($ids));
+        }
+
+        return $pagination
             ->orderBy('id', 'desc')
-            ->paginate(20);
+            ->paginate($nbPerPage);
     }
 
     public function getForMainPage($count)

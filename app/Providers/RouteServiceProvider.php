@@ -21,14 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
-
-    /**
-     * The path to the main route.
-     *
-     * @var string
-     */
-    public const MAIN = '/';
+    public const HOME = '/';
 
     /**
      * Define your route model bindings, pattern filters, etc.

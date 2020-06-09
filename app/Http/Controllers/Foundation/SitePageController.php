@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Foundation;
 
 use App\Repositories\PostRepository;
 use App\Repositories\PrintingRepository;
-use Illuminate\Http\Request;
 
 class SitePageController extends BaseController
 {

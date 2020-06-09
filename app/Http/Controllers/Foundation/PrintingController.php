@@ -57,11 +57,12 @@ class PrintingController extends BaseController
         $data = $request->all();
         $printingsPagination = null;
 
-        if(!empty($data['filter_applied']))
+        if(!empty($data['filter_required']))
         {
-            $printingsPagination = $this->printingRepository->applyFilter($data);
+            $printingsPagination = $this->printingRepository->applyFilter($data, 8);
+            $printingsPagination->appends($request->query());
         } else {
-            $printingsPagination = $this->printingRepository->getForIndexPage(10);
+            $printingsPagination = $this->printingRepository->getForIndexPage(8);
         }
 
         $authorOptions = $this->printingAuthorRepository
@@ -75,8 +76,7 @@ class PrintingController extends BaseController
 
         return view('printings.index',
             compact('printingsPagination',
-                'authorOptions', 'pubhouseOptions',
-                'typeOptions', 'genreOptions'));
+                'authorOptions', 'pubhouseOptions', 'typeOptions', 'genreOptions'));
     }
 
     /**

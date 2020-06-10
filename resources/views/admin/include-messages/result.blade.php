@@ -2,9 +2,9 @@
     /** @var \Illuminate\Support\ViewErrorBag $errors */
 @endphp
 @if($errors->any())
-    <div class="row justify-content-center my-2">
+    <div class="row justify-content-center no-gutters">
         <div class="col">
-            <div class="alert alert-danger alert-dismissible"
+            <div class="alert alert-danger alert-dismissible my-2"
                  role="alert">
                 <ul class="m-0">
                     @foreach($errors->all() as $errorMsg)
@@ -19,9 +19,9 @@
         </div>
     </div>
 @elseif(session('success'))
-    <div class="row justify-content-center my-2">
+    <div class="row justify-content-center no-gutters">
         <div class="col">
-            <div class="alert alert-success alert-dismissible"
+            <div class="alert alert-success alert-dismissible my-2"
                  role="alert">
                 {{ session('success') }}
                 <button type="button" class="close"

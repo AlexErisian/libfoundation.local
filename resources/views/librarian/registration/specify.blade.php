@@ -61,7 +61,7 @@
                        name="printing_id"
                        value="{{ old('printing_id', $printing->id) }}">
                 <button class="btn btn-primary" type="submit">
-                    Підтвердити видачу
+                    Підтвердити реєстрацію
                 </button>
             </div>
         </div>

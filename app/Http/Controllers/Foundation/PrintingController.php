@@ -104,11 +104,14 @@ class PrintingController extends BaseController
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $printing = $this->printingRepository->getForShowPage($id);
+
+        return view('printings.show',
+            compact('printing'));
     }
 
     /**

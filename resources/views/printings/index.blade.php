@@ -113,7 +113,7 @@
                     </button>
                 </form>
             </div>
-            <hr class="w-100">
+            <hr class="w-100 m-0">
             <div class="card-body">
                 @if($printingsPagination->count() > 0)
                     <div class="row row-cols-1 row-cols-lg-2">
@@ -132,41 +132,47 @@
                                         <div class="col">
                                             <div class="card-body">
                                                 <h5 class="card-title">
-                                                    <a href="">
+                                                    <a href="{{ route('printings.show', $printing->id) }}">
                                                         {{ $printing->title }}
                                                     </a>
                                                 </h5>
                                                 <h6 class="card-subtitle text-muted mb-2">
-                                                    Автор
-                                                    оригіналу: {{ $printing->author->name }}
+                                                    Автор оригіналу:
+                                                    {{ $printing->author->name }}
                                                     <br>
-                                                    Видавництво: {{ $printing->pubhouse->name }}
+                                                    Видавництво:
+                                                    {{ $printing->pubhouse->name }}
                                                     <br>
-                                                    Тип видання: {{ $printing->type->name }}
+                                                    Тип видання:
+                                                    {{ $printing->type->name }}
                                                     <br>
-                                                    Рік
-                                                    публікації: {{ $printing->publication_year }}
+                                                    Рік публікації:
+                                                    {{ $printing->publication_year }}
                                                     <br>
-                                                    ISBN: {{ $printing->isbn ?? '-' }}
+                                                    ISBN:
+                                                    {{ $printing->isbn ?? '-' }}
                                                     <br>
                                                     Жанри:
-                                                    {{ $printing->genres->implode('name', ', ') }}
+                                                    {{ $printing->genres->count() > 0 ? $printing->genres->implode('name', ', ') : '-' }}
                                                     <br>
                                                 </h6>
-                                                <hr class="w-100">
-                                                <p class="card-text">
-                                                    Анотація:<br>
-                                                    {{ $printing->annotation }}
-                                                </p>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <hr class="w-100">
+                                        <p class="card-text">
+                                            Анотація:<br>
+                                            {{ $printing->annotation }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <h5 class="card-title text-center">За даними опціями нічого не знайдено.</h5>
+                    <h5 class="card-title text-center">За даними опціями нічого
+                        не знайдено.</h5>
                 @endif
             </div>
             @if($printingsPagination->total() > $printingsPagination->count())

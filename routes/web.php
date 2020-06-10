@@ -28,6 +28,17 @@ Route::group(['namespace' => 'Foundation'],
             ->only(['index', 'show']);
     });
 
+Route::name('reader.')->group(function () {
+    Route::group([
+        'namespace' => 'Foundation\Reader',
+        'prefix' => 'reader',
+    ],
+        function () {
+            Route::resource('printing-comments', 'PrintingCommentController')
+                ->only(['store', 'destroy']);
+        });
+});
+
 Route::name('librarian.')->group(function () {
     Route::group([
         'namespace' => 'Foundation\Librarian',

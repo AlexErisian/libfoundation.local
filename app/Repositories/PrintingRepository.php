@@ -119,6 +119,31 @@ class PrintingRepository extends BaseRepository
             ->paginate($nbPerPage);
     }
 
+    public function getForShowPage($id)
+    {
+        $columns = [
+            'id', 'printing_author_id', 'printing_pubhouse_id', 'printing_type_id',
+            'title', 'publication_year', 'isbn',
+            'annotation', 'picture_path',
+        ];
+        $relations = [
+            'author:id,name',
+            'pubhouse:id,name',
+            'type:id,name',
+            'genres',
+            'comments.user',
+            'comments' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
+            'libraries'
+        ];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->with($relations)
+            ->find($id);
+    }
+
     /**
      * @param int $nbPerPage
      * @param bool $withTrashed

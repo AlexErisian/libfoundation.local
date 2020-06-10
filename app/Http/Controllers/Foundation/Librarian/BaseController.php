@@ -21,6 +21,8 @@ class BaseController extends GuestBaseController
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->middleware('auth');
         $this->middleware('role:librarian');
 

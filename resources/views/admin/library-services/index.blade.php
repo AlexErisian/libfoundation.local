@@ -6,7 +6,7 @@
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: позичання видань</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -14,10 +14,10 @@
                         <td>Бібліотекар</td>
                         <td>Код квитка</td>
                         <td>Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-md-table-cell">Позичено екземплярів</td>
-                        <td class="d-none d-md-table-cell">Коли позичено</td>
-                        <td class="d-none d-md-table-cell">Строком до</td>
-                        <td class="d-none d-md-table-cell">Коли повернено</td>
+                        <td>Позичено екземплярів</td>
+                        <td>Коли позичено</td>
+                        <td>Строком до</td>
+                        <td>Коли повернено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,16 +48,16 @@
                                     {{ $libraryService->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->exemplars_given }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->created_at }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->given_up_to }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->returned_at }}
                             </td>
                         </tr>
@@ -65,11 +65,15 @@
                     </tbody>
                 </table>
             </div>
-            @if($libraryServicesPagination->total() > $libraryServicesPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($libraryServicesPagination->total() > $libraryServicesPagination->count())
                     {{ $libraryServicesPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

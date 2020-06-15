@@ -85,24 +85,21 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="genre_ids">Жанр видання</label>
-                    <select class="form-control custom-select"
-                            id="genre_ids"
-                            name="genre_ids[]"
-                            multiple
-                            size="5"
-                            required>
-                        @foreach($printing->genres as $genre)
-                        <option selected value="{{ $genre->id }}">
-                            {{ $genre->id.'. '.$genre->name }}
-                        </option>
-                        @endforeach
-                        @foreach($genreOptions as $genre)
-                            <option value="{{ $genre->id }}">
-                                {{ $genre->id.'. '.$genre->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <p class="card-text">Жанри видань</p>
+                    @foreach($genreOptions as $genre)
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="genre{{ $genre->id }}"
+                                   name="genre_ids[]"
+                                   value="{{ $genre->id }}"
+                                   @if(in_array($genre->id, $printing->genres->pluck('id')->toArray() ?? [])) checked @endif>
+                            <label class="form-check-label"
+                                   for="genre{{ $genre->id }}">
+                                {{ $genre->name }}
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="form-group">
                     <label for="publication_year">Рік публікації</label>

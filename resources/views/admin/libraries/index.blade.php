@@ -6,12 +6,12 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: бібліотеки</h5>
-                <a class="btn btn-secondary"
+                <a class="btn btn-secondary d-print-none"
                    href="{{ route('admin.libraries.create') }}">
                     Створити новий
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -41,11 +41,15 @@
                     </tbody>
                 </table>
             </div>
-            @if($librariesPagination->total() > $librariesPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($librariesPagination->total() > $librariesPagination->count())
                     {{ $librariesPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

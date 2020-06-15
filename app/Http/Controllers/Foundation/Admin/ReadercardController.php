@@ -128,11 +128,22 @@ class ReadercardController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $readercard = $this->readercardRepository->getEdit($id);
+        $readercardDeleted = $readercard->delete();
+
+        if ($readercardDeleted) {
+            return redirect()
+                ->route('admin.readercards.index')
+                ->with(['success' => 'Запис успішно вилучено з обліку.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Не вдалося вилучити запис.']);
+        }
     }
 }

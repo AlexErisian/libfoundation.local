@@ -21,7 +21,16 @@ class BookshelfRepository extends BaseRepository
     {
         $columns = ['id', 'library_id', 'printing_id',
             'exemplars_registered', 'exemplars_in_stock',];
-        $relations = ['library:id,name', 'printing:id,title'];
+        $relations = [
+            'library:id,name',
+            'library' => function ($query) use ($withTrashed) {
+                return $query->withTrashed();
+            },
+            'printing:id,title',
+            'printing' => function ($query) use ($withTrashed) {
+                return $query->withTrashed();
+            },
+        ];
 
         return $this->startConditions()
             ->select($columns)

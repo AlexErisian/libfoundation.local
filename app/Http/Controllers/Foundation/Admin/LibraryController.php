@@ -26,7 +26,7 @@ class LibraryController extends BaseController
     public function index()
     {
         $librariesPagination = $this->libraryRepository
-            ->getAllWithPagination(15, false);
+            ->getAllWithPagination(20, false);
 
         return view('admin.libraries.index',
             compact('librariesPagination'));
@@ -126,6 +126,7 @@ class LibraryController extends BaseController
      *
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -138,7 +139,7 @@ class LibraryController extends BaseController
                 ->with(['success' => 'Запис про бібліотеку успішно вилучено з обліку.']);
         } else {
             return back()
-                ->withErrors(['msg' => 'Не вдалося видалити запис.']);
+                ->withErrors(['msg' => 'Не вдалося вилучити запис.']);
         }
     }
 }

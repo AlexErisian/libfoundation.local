@@ -9,7 +9,7 @@
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -17,10 +17,10 @@
                         <td>Бібліотекар</td>
                         <td>Код квитка</td>
                         <td>Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-md-table-cell">Позичено екземплярів</td>
-                        <td class="d-none d-md-table-cell">Коли позичено</td>
-                        <td class="d-none d-md-table-cell">Строком до</td>
-                        <td class="d-none d-md-table-cell">Коли повернено</td>
+                        <td>Позичено екземплярів</td>
+                        <td>Коли позичено</td>
+                        <td>Строком до</td>
+                        <td>Коли повернено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,16 +45,16 @@
                                     {{ $libraryService->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->exemplars_given }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->created_at }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->given_up_to }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $libraryService->returned_at }}
                             </td>
                         </tr>
@@ -67,10 +67,10 @@
             @if($libraryServicesPagination->total() > $libraryServicesPagination->count())
                     {{ $libraryServicesPagination->links() }}
             @endif
-                <a class="btn btn-outline-primary float-right"
-                    href="">
+                <button class="btn btn-outline-primary float-right"
+                   onclick="window.print();">
                     Надрукувати звіт
-                </a>
+                </button>
             </div>
         </div>
     </div>

@@ -128,10 +128,21 @@ class PrintingAuthorController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        $author = $this->printingAuthorRepository->getEdit($id);
+        $authorDeleted = $author->delete();
+
+        if ($authorDeleted) {
+            return redirect()
+                ->route('admin.printing-authors.index')
+                ->with(['success' => 'Запис успішно вилучено з обліку.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Не вдалося вилучити запис.']);
+        }
     }
 }

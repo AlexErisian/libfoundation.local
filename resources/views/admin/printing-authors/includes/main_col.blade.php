@@ -61,9 +61,5 @@
     </div>
     <div class="card-footer">
         <button class="btn btn-primary" type="submit">Зберегти</button>
-        <a class="btn btn-danger"
-           href="{{ route('admin.printing-authors.destroy', $author->id) }}">
-            Видалити запис
-        </a>
     </div>
 </div>

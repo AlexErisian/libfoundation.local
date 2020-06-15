@@ -29,7 +29,7 @@ class BookshelfController extends BaseController
     {
         $libraryId = session('working_library_id');
         $bookshelvesPagination = $this->bookshelfRepository
-            ->getAllByLibraryId($libraryId);
+            ->getAllByLibraryId($libraryId, 20);
 
         return view('librarian.bookshelves.index',
             compact('bookshelvesPagination'));

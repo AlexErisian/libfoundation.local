@@ -9,7 +9,6 @@ use App\Repositories\PrintingGenreRepository;
 use App\Repositories\PrintingPubhouseRepository;
 use App\Repositories\PrintingRepository;
 use App\Repositories\PrintingTypeRepository;
-use Illuminate\Http\Request;
 
 class PrintingController extends BaseController
 {
@@ -134,7 +133,7 @@ class PrintingController extends BaseController
         $typeOptions = $this->typeRepository
             ->getSelectOptions($printing->printing_type_id);
         $genreOptions = $this->genreRepository
-            ->getMultiSelectOptions($printing->genres->pluck('id')->toArray());
+            ->getMultiSelectOptions();
 
         return view('admin.printings.edit',
             compact('printing', 'authorOptions',
@@ -176,10 +175,21 @@ class PrintingController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $printing = $this->printingRepository->getEdit($id);
+        $printingDeleted = $printing->delete();
+
+        if ($printingDeleted) {
+            return redirect()
+                ->route('admin.printing-comments.index')
+                ->with(['success' => 'Запис успішно вилучено з обліку.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Не вдалося вилучити запис.']);
+        }
     }
 }

@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Bookshelf;
+use App\Models\Library;
 use App\Models\LibraryService;
 use App\Models\Post;
 use App\Models\Printing;
 use App\Models\PrintingComment;
 use App\Models\PrintingRegistration;
 use App\Models\PrintingWritingOff;
+use App\Observers\BookshelfObserver;
+use App\Observers\LibraryObserver;
 use App\Observers\LibraryServiceObserver;
 use App\Observers\PostObserver;
 use App\Observers\PrintingCommentObserver;
@@ -41,5 +45,7 @@ class AppServiceProvider extends ServiceProvider
         LibraryService::observe(LibraryServiceObserver::class);
         PrintingRegistration::observe(PrintingRegistrationObserver::class);
         PrintingWritingOff::observe(PrintingWritingOffObserver::class);
+        Library::observe(LibraryObserver::class);
+        Bookshelf::observe(BookshelfObserver::class);
     }
 }

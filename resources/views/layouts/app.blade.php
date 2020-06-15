@@ -50,9 +50,12 @@
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
-                        <div
-                            class="dropdown-menu dropdown-menu-right position-absolute"
-                            aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right position-absolute"
+                             aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-primary"
+                               href="{{ route('reader.users.edit', auth()->user()) }}">
+                                {{ __('Персональна сторінка') }}
+                            </a>
                             <a class="dropdown-item text-danger"
                                href="{{ route('logout') }}"
                                onclick="event.preventDefault();
@@ -76,7 +79,7 @@
             @include('messages.role_rejection')
         @endif
         <div class="row justify-content-center m-0">
-            <div class="col-xl-2 col-md-3 px-0">
+            <div class="col-xl-2 col-md-3 px-0 d-print-none">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <ul class="navbar-nav nav-pills">

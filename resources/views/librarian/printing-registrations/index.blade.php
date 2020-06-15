@@ -9,15 +9,15 @@
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Бібліотекар</td>
                         <td>Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-md-table-cell">Зареєстровано екземплярів</td>
-                        <td class="d-none d-md-table-cell">Коли зареєстровано</td>
+                        <td>Зареєстровано екземплярів</td>
+                        <td>Коли зареєстровано</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,10 +39,10 @@
                                     {{ $printingRegistration->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printingRegistration->exemplars_registered_initially }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printingRegistration->created_at }}
                             </td>
                         </tr>
@@ -55,10 +55,10 @@
             @if($printingRegistrationsPagination->total() > $printingRegistrationsPagination->count())
                     {{ $printingRegistrationsPagination->links() }}
             @endif
-                <a class="btn btn-outline-primary float-right"
-                    href="">
+                <button class="btn btn-outline-primary float-right"
+                   onclick="window.print();">
                     Надрукувати звіт
-                </a>
+                </button>
             </div>
         </div>
     </div>

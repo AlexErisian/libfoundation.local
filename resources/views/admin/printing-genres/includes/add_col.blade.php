@@ -17,7 +17,7 @@
                    type="text"
                    id="created_at"
                    readonly
-                   value="{{ old('created_at', $genre->created_at) }}">
+                   value="{{ $genre->created_at }}">
         </div>
         <div class="form-group">
             <label for="updated_at">Оновлено</label>
@@ -25,7 +25,19 @@
                    type="text"
                    id="updated_at"
                    readonly
-                   value="{{ old('updated_at', $genre->updated_at) }}">
+                   value="{{ $genre->updated_at }}">
         </div>
+    </div>
+    <div class="card-footer">
+        <form class="w-100"
+              method="POST"
+              action="{{ route('admin.printing-genres.destroy', $genre->id) }}">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-outline-danger"
+                    type="submit">
+                Видалити запис
+            </button>
+        </form>
     </div>
 </div>

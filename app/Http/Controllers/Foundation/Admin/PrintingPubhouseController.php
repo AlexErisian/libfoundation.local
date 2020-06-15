@@ -127,11 +127,22 @@ class PrintingPubhouseController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $pubhouse = $this->printingPubhouseRepository->getEdit($id);
+        $pubhouseDeleted = $pubhouse->delete();
+
+        if ($pubhouseDeleted) {
+            return redirect()
+                ->route('admin.printing-pubhouses.index')
+                ->with(['success' => 'Запис успішно вилучено з обліку.']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Не вдалося вилучити запис.']);
+        }
     }
 }

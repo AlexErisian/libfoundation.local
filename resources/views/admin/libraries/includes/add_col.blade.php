@@ -1,3 +1,6 @@
+@php
+    /** @var \App\Models\Library $library */
+@endphp
 <div class="card">
     <div class="card-header bg-primary">
         <h5 class="text-white">Статистичні дані</h5>
@@ -17,7 +20,7 @@
                    type="text"
                    id="created_at"
                    readonly
-                   value="{{ old('created_at', $library->created_at) }}">
+                   value="{{ $library->created_at }}">
         </div>
         <div class="form-group">
             <label for="updated_at">Оновлено</label>
@@ -25,7 +28,7 @@
                    type="text"
                    id="updated_at"
                    readonly
-                   value="{{ old('updated_at', $library->updated_at) }}">
+                   value="{{ $library->updated_at }}">
         </div>
     </div>
     <div class="card-footer">

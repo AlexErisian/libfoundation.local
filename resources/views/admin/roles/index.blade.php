@@ -6,7 +6,7 @@
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: ролі користувачів</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -28,11 +28,11 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="card-footer">
-                    <p class="alert alert-warning">
-                        Увага! Змінення записів ролей може привести до збоїв роботи додатку.
-                    </p>
-                </div>
+            </div>
+            <div class="card-footer">
+                <p class="alert alert-warning m-0">
+                    Увага! Змінення записів ролей призведе до збоїв роботи додатку.
+                </p>
             </div>
         </div>
     </div>

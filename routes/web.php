@@ -36,6 +36,8 @@ Route::name('reader.')->group(function () {
         function () {
             Route::resource('printing-comments', 'PrintingCommentController')
                 ->only(['store', 'destroy']);
+            Route::resource('users', 'UserController')
+                ->only(['edit', 'update']);
         });
 });
 

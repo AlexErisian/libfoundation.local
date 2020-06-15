@@ -6,16 +6,16 @@
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: реєстрації видань</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover overflow-auto">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Користувач</td>
                         <td>Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-md-table-cell">Екземплярів зареєстровано</td>
-                        <td class="d-none d-md-table-cell">Створено</td>
-                        <td class="d-none d-md-table-cell">Оновлено</td>
+                        <td>Екземплярів зареєстровано</td>
+                        <td>Створено</td>
+                        <td>Оновлено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,19 +40,23 @@
                                     {{ $registration->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">{{ $registration->exemplars_registered_initially }}</td>
-                            <td class="d-none d-md-table-cell">{{ $registration->created_at }}</td>
-                            <td class="d-none d-md-table-cell">{{ $registration->updated_at }}</td>
+                            <td>{{ $registration->exemplars_registered_initially }}</td>
+                            <td>{{ $registration->created_at }}</td>
+                            <td>{{ $registration->updated_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-            @if($registrationsPagination->total() > $registrationsPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($registrationsPagination->total() > $registrationsPagination->count())
                     {{ $registrationsPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

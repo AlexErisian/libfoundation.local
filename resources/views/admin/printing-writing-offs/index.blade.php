@@ -6,15 +6,15 @@
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: списання видань</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Користувач</td>
-                        <td>Ідентифікатор зв'язку</td>
-                        <td class="d-none d-md-table-cell">Екземплярів списано</td>
-                        <td class="d-none d-md-table-cell">Створено</td>
+                        <td>Ідентифікатор книжної шафи</td>
+                        <td>Екземплярів списано</td>
+                        <td>Створено</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,18 +39,22 @@
                                     {{ $writingOff->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-table-cell">{{ $writingOff->exemplars_written_off }}</td>
-                            <td class="d-none d-table-cell">{{ $writingOff->created_at }}</td>
+                            <td>{{ $writingOff->exemplars_written_off }}</td>
+                            <td>{{ $writingOff->created_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-            @if($writingOffsPagination->total() > $writingOffsPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($writingOffsPagination->total() > $writingOffsPagination->count())
                     {{ $writingOffsPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

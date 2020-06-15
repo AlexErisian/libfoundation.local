@@ -4,12 +4,13 @@
     <div class="col">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="card-title">Усі видання, що зберігаються в бібліотеці</h4>
+                <h4 class="card-title">Усі видання, що зберігаються в
+                    бібліотеці</h4>
                 <h5 class="card-subtitle">
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -35,7 +36,7 @@
                             <td>{{ $bookshelf->shelf_floor }}</td>
                             <td>
                                 <a class="card-link"
-                                   href="">
+                                   href="{{ route('printings.show', $bookshelf->printing->id) }}">
                                     {{ $bookshelf->printing->title }}
                                 </a>
                             </td>
@@ -48,13 +49,13 @@
                 </table>
             </div>
             <div class="card-footer">
-            @if($bookshelvesPagination->total() > $bookshelvesPagination->count())
+                @if($bookshelvesPagination->total() > $bookshelvesPagination->count())
                     {{ $bookshelvesPagination->links() }}
-            @endif
-                <a class="btn btn-outline-primary float-right"
-                   href="">
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
                     Надрукувати звіт
-                </a>
+                </button>
             </div>
         </div>
     </div>

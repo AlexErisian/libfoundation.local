@@ -12,7 +12,7 @@
                     <h6 class="card-title">Позичено видання</h6>
                     <h5 class="card-text">
                         <a class="card-link"
-                           href="{{--{{ route('') }}--}}">
+                           href="{{ route('printings.show', $libraryService->bookshelf->printing->id) }}">
                             {{ $libraryService->bookshelf->printing->title }}
                         </a>
                     </h5>

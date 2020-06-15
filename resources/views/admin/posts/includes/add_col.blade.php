@@ -1,3 +1,6 @@
+@php
+    /** @var \App\Models\Post $post */
+@endphp
 <div class="card">
     <div class="card-header bg-primary">
         <h5 class="text-white">Статистичні дані</h5>
@@ -35,5 +38,17 @@
                    readonly
                    value="{{ $post->published_at }}">
         </div>
+    </div>
+    <div class="card-footer">
+        <form class="w-100"
+              method="POST"
+              action="{{ route('admin.posts.destroy', $post->id) }}">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-outline-danger"
+                    type="submit">
+                Видалити запис
+            </button>
+        </form>
     </div>
 </div>

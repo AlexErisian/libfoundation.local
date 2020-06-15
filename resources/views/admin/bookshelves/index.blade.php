@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="col">
+        @include('messages.result')
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: книжні шафи</h5>

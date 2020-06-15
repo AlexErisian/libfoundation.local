@@ -2,24 +2,25 @@
 
 @section('content')
     <div class="col">
+        @include('messages.result')
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: друковані видання</h5>
-                <a class="btn btn-secondary"
+                <a class="btn btn-secondary d-print-none"
                    href="{{ route('admin.printings.create') }}">
                     Створити новий
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Назва</td>
                         <td>Автор</td>
-                        <td class="d-none d-md-table-cell">Видавництво</td>
-                        <td class="d-none d-md-table-cell">Тип</td>
-                        <td class="d-none d-md-table-cell">Рік публікації</td>
+                        <td>Видавництво</td>
+                        <td>Тип</td>
+                        <td>Рік публікації</td>
                         <td>ISBN</td>
                     </tr>
                     </thead>
@@ -40,30 +41,34 @@
                                     {{ $printing->author->name }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 <a class="card-link"
                                    href="{{ route('admin.printing-pubhouses.edit', $printing->pubhouse->id) }}">
                                     {{ $printing->pubhouse->name }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 <a class="card-link"
                                    href="{{ route('admin.printing-types.edit', $printing->type->id) }}">
                                     {{ $printing->type->name }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">{{ $printing->publication_year }}</td>
+                            <td>{{ $printing->publication_year }}</td>
                             <td>{{ $printing->isbn }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-            @if($printingsPagination->total() > $printingsPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($printingsPagination->total() > $printingsPagination->count())
                     {{ $printingsPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

@@ -1,10 +1,8 @@
+@php
+    /** @var \App\Models\Library $library */
+@endphp
 @extends('layouts.app')
-
 @section('content')
-    @php
-        /** @var \App\Models\Library $library */
-        /** @var \Illuminate\Support\ViewErrorBag $errors */
-    @endphp
     <div class="col">
         <div class="row justify-content-center">
             <form class="col"

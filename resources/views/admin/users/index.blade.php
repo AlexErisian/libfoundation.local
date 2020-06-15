@@ -5,12 +5,12 @@
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: користувачі</h5>
-                <a class="btn btn-secondary"
+                <a class="btn btn-secondary d-print-none"
                    href="{{ route('admin.users.create') }}">
                     Створити новий
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -50,11 +50,15 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer">
                 @if($usersPagination->total() > $usersPagination->count())
-                    <div class="card-footer">
-                        {{ $usersPagination->links() }}
-                    </div>
+                    {{ $usersPagination->links() }}
                 @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
             </div>
         </div>
     </div>

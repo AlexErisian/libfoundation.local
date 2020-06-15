@@ -8,16 +8,16 @@
                 <h5 class="card-title">Вибір існуючуго видання для реєстрації у
                     бібліотеці</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Назва</td>
                         <td>Автор</td>
-                        <td class="d-none d-md-table-cell">Видавництво</td>
-                        <td class="d-none d-md-table-cell">Тип</td>
-                        <td class="d-none d-md-table-cell">Рік публікації</td>
+                        <td>Видавництво</td>
+                        <td>Тип</td>
+                        <td>Рік публікації</td>
                         <td>ISBN</td>
                         <td>Дія</td>
                     </tr>
@@ -33,13 +33,13 @@
                             <td>
                                 {{ $printing->author->name }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printing->pubhouse->name }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printing->type->name }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printing->publication_year }}
                             </td>
                             <td>{{ $printing->isbn }}</td>

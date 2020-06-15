@@ -3,7 +3,7 @@
 @endphp
 <div class="card">
     <div class="card-header bg-primary">
-        <h5 class="text-white">Редагування запису: користувач</h5>
+        <h5 class="text-white">Редагування запису: пост з новинами</h5>
     </div>
     <div class="card-body">
         <ul class="nav nav-tabs" role="tablist">

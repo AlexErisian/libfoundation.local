@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\LibraryService as Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class LibraryServiceRepository extends BaseRepository
@@ -29,6 +30,29 @@ class LibraryServiceRepository extends BaseRepository
             ->withTrashed($withTrashed)
             ->orderBy('id', 'desc')
             ->paginate($nbPerPage);
+    }
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function getAllByReadercardId($id)
+    {
+        $columns = ['id', 'readercard_id', 'bookshelf_id',
+            'exemplars_given', 'created_at', 'given_up_to', 'returned_at'];
+
+        $relations = [
+            'bookshelf:id,printing_id,library_id',
+            'bookshelf.printing:id,title',
+            'bookshelf.library:id,name'
+        ];
+
+        return $this->startConditions()
+            ->select($columns)
+            ->with($relations)
+            ->where('readercard_id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     /**

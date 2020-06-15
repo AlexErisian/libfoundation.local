@@ -39,6 +39,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Bookshelf withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Bookshelf withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LibraryService[] $libraryServices
+ * @property-read int|null $library_services_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PrintingRegistration[] $printingRegistrations
+ * @property-read int|null $printing_registrations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PrintingWritingOff[] $printingWritingOffs
+ * @property-read int|null $printing_writing_offs_count
  */
 class Bookshelf extends Model
 {
@@ -58,5 +64,20 @@ class Bookshelf extends Model
     public function printing()
     {
         return $this->belongsTo(Printing::class);
+    }
+
+    public function libraryServices()
+    {
+        return $this->hasMany(LibraryService::class);
+    }
+
+    public function printingRegistrations()
+    {
+        return $this->hasMany(PrintingRegistration::class);
+    }
+
+    public function printingWritingOffs()
+    {
+        return $this->hasMany(PrintingWritingOff::class);
     }
 }

@@ -4,20 +4,21 @@
     <div class="col">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="card-title">Усі записи про списання видань у бібліотеці</h4>
+                <h4 class="card-title">Усі записи про списання видань у
+                    бібліотеці</h4>
                 <h5 class="card-subtitle">
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Бібліотекар</td>
                         <td>Ідентифікатор книжної шафи</td>
-                        <td class="d-none d-md-table-cell">Списано екземплярів</td>
-                        <td class="d-none d-md-table-cell">Коли списано</td>
+                        <td>Списано екземплярів</td>
+                        <td>Коли списано</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,10 +40,10 @@
                                     {{ $printingWritingOff->bookshelf_id }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printingWritingOff->exemplars_written_off }}
                             </td>
-                            <td class="d-none d-md-table-cell">
+                            <td>
                                 {{ $printingWritingOff->created_at }}
                             </td>
                         </tr>
@@ -52,13 +53,13 @@
                 </table>
             </div>
             <div class="card-footer">
-            @if($printingWritingOffsPagination->total() > $printingWritingOffsPagination->count())
+                @if($printingWritingOffsPagination->total() > $printingWritingOffsPagination->count())
                     {{ $printingWritingOffsPagination->links() }}
-            @endif
-                <a class="btn btn-outline-primary float-right"
-                    href="">
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                   onclick="window.print();">
                     Надрукувати звіт
-                </a>
+                </button>
             </div>
         </div>
     </div>

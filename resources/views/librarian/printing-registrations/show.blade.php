@@ -12,7 +12,7 @@
                     <h6 class="card-title">Зареєстровано видання</h6>
                     <h5 class="card-text">
                         <a class="card-link"
-                           href="{{--{{ route('') }}--}}">
+                           href="{{ route('printings.show', $printingRegistration->bookshelf->printing->id) }}">
                             {{ $printingRegistration->bookshelf->printing->title }}
                         </a>
                     </h5>

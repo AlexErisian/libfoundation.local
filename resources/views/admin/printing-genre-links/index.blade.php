@@ -6,7 +6,7 @@
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: зв'язки "видання-жанр"</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -36,11 +36,15 @@
                     </tbody>
                 </table>
             </div>
-            @if($linksPagination->total() > $linksPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($linksPagination->total() > $linksPagination->count())
                     {{ $linksPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

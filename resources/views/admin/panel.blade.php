@@ -55,7 +55,7 @@
                     </a>
                     <a class="nav-link btn btn-outline-primary m-2"
                        href="{{ route('admin.bookshelves.index') }}">
-                        12. Книжні шафи
+                        12. Книжні шафи (зберігання видань)
                     </a>
                     <a class="nav-link btn btn-outline-primary m-2"
                        href="{{ route('admin.printing-genre-links.index') }}">

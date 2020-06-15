@@ -2,23 +2,24 @@
 
 @section('content')
     <div class="col">
+        @include('messages.result')
         <div class="card">
             <div class="card-header bg-primary">
                 <h5 class="text-white">Усі записи: новини</h5>
-                <a class="btn btn-secondary"
+                <a class="btn btn-secondary d-print-none"
                    href="{{ route('admin.posts.create') }}">
                     Створити новий
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <td>Ідентифікатор</td>
                         <td>Автор</td>
                         <td>Заголовок</td>
-                        <td class="d-none d-md-table-cell">Чи опубліковано</td>
-                        <td class="d-none d-md-table-cell">Опубліковано</td>
+                        <td>Чи опубліковано</td>
+                        <td>Опубліковано</td>
                         <td class="d-none d-lg-table-cell">Змінено</td>
                     </tr>
                     </thead>
@@ -34,19 +35,23 @@
                                     {{ $post->title }}
                                 </a>
                             </td>
-                            <td class="d-none d-md-table-cell">@if($post->is_published) Так @else Ні @endif</td>
-                            <td class="d-none d-md-table-cell">{{ $post->published_at }}</td>
+                            <td>@if($post->is_published) Так @else Ні @endif</td>
+                            <td>{{ $post->published_at }}</td>
                             <td class="d-none d-lg-table-cell">{{ $post->updated_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-            @if($postsPagination->total() > $postsPagination->count())
-                <div class="card-footer">
+            <div class="card-footer">
+                @if($postsPagination->total() > $postsPagination->count())
                     {{ $postsPagination->links() }}
-                </div>
-            @endif
+                @endif
+                <button class="btn btn-outline-primary float-right"
+                        onclick="window.print();">
+                    Надрукувати звіт
+                </button>
+            </div>
         </div>
     </div>
 @endsection

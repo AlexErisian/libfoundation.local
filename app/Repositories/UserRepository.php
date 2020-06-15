@@ -15,10 +15,9 @@ class UserRepository extends BaseRepository
 
     /**
      * @param int $nbPerPage
-     * @param bool $withTrashed
      * @return LengthAwarePaginator
      */
-    public function getAllWithPagination($nbPerPage = 15, $withTrashed = false)
+    public function getAllWithPagination($nbPerPage = 15)
     {
         $columns = ['id', 'role_id', 'readercard_id', 'name', 'is_banned'];
         $relations = ['role:id,name', 'readercard:id,code'];
@@ -26,7 +25,6 @@ class UserRepository extends BaseRepository
         return $this->startConditions()
             ->select($columns)
             ->with($relations)
-            ->withTrashed($withTrashed)
             ->paginate($nbPerPage);
     }
 

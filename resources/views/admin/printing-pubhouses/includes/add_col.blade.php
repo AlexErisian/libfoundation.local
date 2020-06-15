@@ -28,4 +28,16 @@
                    value="{{ old('updated_at', $pubhouse->updated_at) }}">
         </div>
     </div>
+    <div class="card-footer">
+        <form class="w-100"
+              method="POST"
+              action="{{ route('admin.printing-pubhouses.destroy', $pubhouse->id) }}">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-outline-danger"
+                    type="submit">
+                Видалити запис
+            </button>
+        </form>
+    </div>
 </div>

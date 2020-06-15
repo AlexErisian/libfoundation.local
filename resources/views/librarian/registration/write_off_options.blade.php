@@ -10,7 +10,7 @@
                     Робоча бібліотека: {{ session('working_library_name') }}
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-hover">
                     <thead>
                     <tr>

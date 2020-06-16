@@ -15,11 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['namespace' => 'Foundation'],
     function () {
         Route::get('/', 'SitePageController@mainPage')->name('main');
+        Route::get('info', 'SitePageController@infoPage')->name('info');
         Route::resource('posts', 'PostController')
             ->only(['index', 'show']);
         Route::resource('printings', 'PrintingController')
@@ -70,6 +69,11 @@ Route::name('librarian.')->group(function () {
             Route::post('registration', 'RegistrationMovementController@confirmRegistration')->name('registration.confirm');
             Route::get('registration/write-off-options', 'RegistrationMovementController@listWriteOff')->name('registration.write-off');
             Route::delete('registration/write-off/{bookshelf}', 'RegistrationMovementController@confirmWriteOff')->name('registration.write-off.confirm');
+            //AdditionalAction
+            Route::get('additional/enter-assign', 'AdditionalActionController@assignReadercardForm')->name('additional.enter-assign');
+            Route::post('additional/assign', 'AdditionalActionController@assignReadercard')->name('additional.assign');
+            Route::get('additional/enter-code', 'AdditionalActionController@checkServicesForm')->name('additional.enter-code');
+            Route::get('additional/{readercard}/services', 'AdditionalActionController@servicesList')->name('additional.services');
             //Resources
             Route::resource('bookshelves', 'BookshelfController')
                 ->only($librarianResourceMethods);

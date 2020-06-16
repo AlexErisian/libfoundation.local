@@ -102,8 +102,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link{{-- @if(URL::current() == route('')) active @endif--}}"
-                                   href="">
+                                <a class="nav-link @if(URL::current() == route('info')) active @endif"
+                                   href="{{ route('info') }}">
                                     {{ __('Про систему') }}
                                 </a>
                             </li>

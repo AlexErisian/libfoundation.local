@@ -11,7 +11,6 @@
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
-
                     @if(!empty($printing->picture_path))
                         <div class="col-10 col-sm-8 col-md-7 col-lg-5">
                             <img class="card-img img-fluid m-1"

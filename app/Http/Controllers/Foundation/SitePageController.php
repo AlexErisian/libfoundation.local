@@ -36,4 +36,12 @@ class SitePageController extends BaseController
         return view('main',
             compact('posts', 'printings'));
     }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function infoPage()
+    {
+        return view('info');
+    }
 }

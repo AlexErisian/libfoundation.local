@@ -76,7 +76,7 @@
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link btn btn-outline-secondary m-1"
-                               href="">
+                               href="{{ route('librarian.additional.enter-assign') }}">
                                 Видати читацький квиток
                             </a>
                         </li>

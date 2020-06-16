@@ -56,6 +56,13 @@ class UserRepository extends BaseRepository
             ->find($id);
     }
 
+    public function getByEmail($email)
+    {
+        return $this->startConditions()
+            ->where('email', $email)
+            ->first();
+    }
+
     /**
      * @param array $requestData
      * @return array

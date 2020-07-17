@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::group([
+    'namespace' => 'Auth\OAuth',
+    'prefix' => 'oauth'
+], function() {
+    Route::get('sign-in/github', 'GitHubOAuthController@showGitHubAuthForm')
+        ->name('sign-in.github');
+    Route::get('github-callback', 'GitHubOAuthController@authUser');
+});
 
 Route::group(['namespace' => 'Foundation'],
     function () {

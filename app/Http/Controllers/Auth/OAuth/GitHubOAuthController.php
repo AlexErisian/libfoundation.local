@@ -19,7 +19,7 @@ class GitHubOAuthController extends Controller
     private $clientSecret;
 
     /**
-     * Exchanges given code to an API access token.
+     * Exchange given code to an API access token.
      *
      * @param string $code
      * @return mixed|string
@@ -42,16 +42,16 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Returns user's primary email using API with token.
+     * Return user's primary email using API with token.
      *
-     * @param $token
+     * @param $accessToken
      * @return mixed|string
      * @throws \Illuminate\Http\Client\RequestException
      */
-    private function getUserEmail($token)
+    private function getUserEmail($accessToken)
     {
         $getHeaders = [
-            'Authorization' => 'token ' . $token,
+            'Authorization' => 'token ' . $accessToken,
             'Connection' => 'close'
         ];
         $userEmails = Http::withHeaders($getHeaders)
@@ -69,16 +69,16 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Returns array which contains user's data using API with token.
+     * Return array using API with token which contains user's data.
      *
-     * @param string $token
+     * @param string $accessToken
      * @return array
      * @throws \Illuminate\Http\Client\RequestException
      */
-    private function getUserData($token)
+    private function getUserData($accessToken)
     {
         $getHeaders = [
-            'Authorization' => 'token ' . $token,
+            'Authorization' => 'token ' . $accessToken,
             'Connection' => 'close'
         ];
         $userData = Http::withHeaders($getHeaders)
@@ -88,7 +88,7 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Creates and returns new User using given data
+     * Create and return new User using given data
      *
      * @param $data
      * @return User|null
@@ -106,6 +106,22 @@ class GitHubOAuthController extends Controller
         return $user->save() ? $user : null;
     }
 
+    /**
+     * Create a new OauthService model for given User
+     *
+     * @param User $user
+     * @param string $accessToken
+     * @return bool
+     */
+    private function createNewOAuthService($user, $accessToken)
+    {
+        $newService = new OauthService();
+        $newService->user_id = $user->id;
+        $newService->type = 3; //GitHub
+        $newService->access_token = $accessToken;
+        return $newService->save();
+    }
+
     public function __construct()
     {
         $this->authUrl = env('GITHUB_AUTH_URL');
@@ -116,7 +132,7 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Redirects user to GitHub to confirm signing in
+     * Redirect user to GitHub to confirm signing in
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -129,9 +145,9 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Receives a special code from GitHub,
+     * Receive a special code from GitHub,
      *
-     * than gets user's data by the token and authenticates the user.
+     * than get user's data by the token and authenticate the user.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -144,29 +160,26 @@ class GitHubOAuthController extends Controller
                 throw new Exception('Missing parameter "code".');
             }
 
-            $token = $this->getAccessToken($code);
-//            $service = OauthService::where('token', $token)->first();
+            $accessToken = $this->getAccessToken($code);
 
-//            if (!empty($service)) {
-//                Auth::login($service->user);
-//            } else {
-            $primaryEmail = $this->getUserEmail($token);
+            $primaryEmail = $this->getUserEmail($accessToken);
 
             $user = User::where('email', $primaryEmail)->first();
             if (empty($user)) {
-                $userData = $this->getUserData($token);
+                $userData = $this->getUserData($accessToken);
                 $userData['primary_email'] = $primaryEmail;
                 $user = $this->registerNewUser($userData);
             }
 
-//                $newService = new OauthService();
-//                $newService->user_id = $user->id;
-//                $newService->type = 3; //GitHub
-//                $newService->token = $token;
-//                $newService->save();
+            if(empty($user->oauthService)) {
+                $this->createNewOAuthService($user, $accessToken);
+            } else {
+                $user->oauthService->access_token = $accessToken;
+                $user->oauthService->update();
+            }
 
             Auth::login($user);
-//            }
+
             return redirect()->route('main');
         } catch (Exception $exception) {
             return redirect()

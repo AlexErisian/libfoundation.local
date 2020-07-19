@@ -17,8 +17,9 @@ class CreateOauthServicesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->smallInteger('type')->unsigned();
-            $table->string('token')->unique();
+            $table->string('access_token')->unique();
             $table->timestamp('valid_until')->nullable();
+            $table->string('refresh_token')->nullable();
             $table->timestamps();
         });
     }

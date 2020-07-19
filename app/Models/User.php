@@ -45,6 +45,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\OauthService|null $oauthService
  */
 class User extends Authenticatable
 {
@@ -94,6 +95,11 @@ class User extends Authenticatable
     public function readercard()
     {
         return $this->belongsTo(Readercard::class);
+    }
+
+    public function oauthService()
+    {
+        return $this->hasOne(OauthService::class);
     }
 
     /**

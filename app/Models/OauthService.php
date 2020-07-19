@@ -15,8 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $user_id
  * @property int $type
- * @property string $token
+ * @property string $access_token
  * @property string $valid_until
+ * @property string|null $refresh_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereCreatedAt($value)
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereValidUntil($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereAccessToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OauthService whereRefreshToken($value)
  */
 class OauthService extends Model
 {

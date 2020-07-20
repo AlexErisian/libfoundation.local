@@ -18,6 +18,15 @@ Route::group([
     'namespace' => 'Auth\OAuth',
     'prefix' => 'oauth'
 ], function() {
+    //Google
+    Route::get('sign-in/google', 'GoogleOAuthController@showGoogleAuthForm')
+        ->name('sign-in.google');
+    Route::get('google-callback', 'GoogleOAuthController@authUser');
+    //LinkedIn
+    Route::get('sign-in/linkedin', 'LinkedInOAuthController@showLinkedInAuthForm')
+        ->name('sign-in.linkedin');
+    Route::get('linkedin-callback', 'LinkedInOAuthController@authUser');
+    //GitHub
     Route::get('sign-in/github', 'GitHubOAuthController@showGitHubAuthForm')
         ->name('sign-in.github');
     Route::get('github-callback', 'GitHubOAuthController@authUser');

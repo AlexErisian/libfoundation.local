@@ -51,10 +51,10 @@ class GitHubOAuthController extends Controller
     private function getUserEmail($accessToken)
     {
         $getHeaders = [
-            'Authorization' => 'token ' . $accessToken,
             'Connection' => 'close'
         ];
-        $userEmails = Http::withHeaders($getHeaders)
+        $userEmails = Http::withToken($accessToken)
+            ->withHeaders($getHeaders)
             ->get($this->userUrl . '/emails')->throw()->json();
 
         $primaryEmail = '';
@@ -78,10 +78,10 @@ class GitHubOAuthController extends Controller
     private function getUserData($accessToken)
     {
         $getHeaders = [
-            'Authorization' => 'token ' . $accessToken,
             'Connection' => 'close'
         ];
-        $userData = Http::withHeaders($getHeaders)
+        $userData = Http::withToken($accessToken)
+            ->withHeaders($getHeaders)
             ->get($this->userUrl)->throw()->json();
 
         return $userData;
@@ -145,9 +145,10 @@ class GitHubOAuthController extends Controller
     }
 
     /**
-     * Receive a special code from GitHub,
-     *
-     * than get user's data by the token and authenticate the user.
+     * - Receives a special code in request from GitHub;
+     * - exchanges the code to an access token;
+     * - uses API to get a user information;
+     * - authenticates the user.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -171,7 +172,7 @@ class GitHubOAuthController extends Controller
                 $user = $this->registerNewUser($userData);
             }
 
-            if(empty($user->oauthService)) {
+            if (empty($user->oauthService)) {
                 $this->createNewOAuthService($user, $accessToken);
             } else {
                 $user->oauthService->access_token = $accessToken;

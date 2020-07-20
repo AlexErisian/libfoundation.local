@@ -87,7 +87,7 @@
                     <div class="col">
                         <h5 class="card-title">Увійти за допомогою:</h5>
                         <a class="btn btn-primary"
-                           href="">Google</a>
+                           href="{{ route('sign-in.google') }}">Google</a>
                         <a class="btn btn-primary"
                            href="">LinkedIn</a>
                         <a class="btn btn-primary"

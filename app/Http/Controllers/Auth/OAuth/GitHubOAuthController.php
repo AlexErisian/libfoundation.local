@@ -113,13 +113,22 @@ class GitHubOAuthController extends Controller
      * @param string $accessToken
      * @return bool
      */
-    private function createNewOAuthService($user, $accessToken)
+    private function updateOrCreateOAuthService($user, $accessToken)
     {
-        $newService = new OauthService();
-        $newService->user_id = $user->id;
-        $newService->type = 3; //GitHub
-        $newService->access_token = $accessToken;
-        return $newService->save();
+        if (empty($user->oauthService)) {
+            $newService = new OauthService();
+            $newService->user_id = $user->id;
+            $newService->type = 3; //GitHub
+            $newService->access_token = $accessToken;
+
+            return $newService->save();
+        } else {
+            $user->oauthService->access_token = $accessToken;
+
+            return $user->oauthService->update();
+        }
+
+
     }
 
     public function __construct()
@@ -172,12 +181,7 @@ class GitHubOAuthController extends Controller
                 $user = $this->registerNewUser($userData);
             }
 
-            if (empty($user->oauthService)) {
-                $this->createNewOAuthService($user, $accessToken);
-            } else {
-                $user->oauthService->access_token = $accessToken;
-                $user->oauthService->update();
-            }
+            $this->updateOrCreateOAuthService($user, $accessToken);
 
             Auth::login($user);
 

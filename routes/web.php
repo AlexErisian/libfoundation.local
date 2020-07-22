@@ -30,6 +30,10 @@ Route::group([
     Route::get('sign-in/github', 'GitHubOAuthController@showGitHubAuthForm')
         ->name('sign-in.github');
     Route::get('github-callback', 'GitHubOAuthController@authUser');
+    //GitLab
+    Route::get('sign-in/gitlab', 'GitLabOAuthController@showGitLabAuthForm')
+        ->name('sign-in.gitlab');
+    Route::get('gitlab-callback', 'GitLabOAuthController@authUser');
 });
 
 Route::group(['namespace' => 'Foundation'],

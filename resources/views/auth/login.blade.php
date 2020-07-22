@@ -89,11 +89,11 @@
                         <a class="btn btn-primary"
                            href="{{ route('sign-in.google') }}">Google</a>
                         <a class="btn btn-primary"
-                           href="">LinkedIn</a>
+                           href="{{ route('sign-in.linkedin') }}">LinkedIn</a>
                         <a class="btn btn-primary"
                            href="{{ route('sign-in.github') }}">GitHub</a>
                         <a class="btn btn-primary"
-                           href="">GitLab</a>
+                           href="{{ route('sign-in.gitlab') }}">GitLab</a>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
-class GoogleOAuthController extends Controller
+class GitLabOAuthController extends Controller
 {
     private $authUrl;
     private $redirectUrl;
@@ -36,8 +36,7 @@ class GoogleOAuthController extends Controller
             'redirect_uri' => $this->redirectUrl,
             'grant_type' => 'authorization_code',
         ];
-        $data = Http::asForm()
-            ->post($this->tokenUrl, $postParams)->throw()->json();
+        $data = Http::post($this->tokenUrl, $postParams)->throw()->json();
 
         return $data ?? [];
     }
@@ -45,7 +44,7 @@ class GoogleOAuthController extends Controller
     /**
      * Return user's primary email using API with token.
      *
-     * @param string $accessToken
+     * @param $accessToken
      * @return array|mixed
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -53,6 +52,11 @@ class GoogleOAuthController extends Controller
     {
         $userInfo = Http::withToken($accessToken)
             ->get($this->userInfoUrl)->throw()->json();
+
+        if (empty($userInfo['email'])) {
+            throw new Exception('Схоже, що доступ до Email користувача обмежено.
+            Будь ласка, перевірте налаштування свого облікового запису на gitlab.com');
+        }
 
         return $userInfo;
     }
@@ -85,20 +89,22 @@ class GoogleOAuthController extends Controller
      */
     private function updateOrCreateOAuthService($user, $tokens)
     {
-        if(empty($user->oauthService)) {
+        $accessTokenExpiresIn = 3600;
+
+        if (empty($user->oauthService)) {
             $newService = new OauthService();
             $newService->user_id = $user->id;
-            $newService->type = 1; //Google
+            $newService->type = 4; //GitLab
             $newService->access_token = $tokens['access_token'];
             $newService->valid_until = Carbon::now()
-                ->addSeconds($tokens['expires_in']);
+                ->addSeconds($accessTokenExpiresIn);
             $newService->refresh_token = $tokens['refresh_token'];
 
             return $newService->save();
         } else {
             $user->oauthService->access_token = $tokens['access_token'];
             $user->oauthService->valid_until = Carbon::now()
-                ->addSeconds($tokens['expires_in']);
+                ->addSeconds($accessTokenExpiresIn);
 
             return $user->oauthService->update();
         }
@@ -106,29 +112,26 @@ class GoogleOAuthController extends Controller
 
     public function __construct()
     {
-        $this->authUrl = env('GOOGLE_AUTH_URL');
-        $this->tokenUrl = env('GOOGLE_TOKEN_URL');
-        $this->redirectUrl = env('GOOGLE_REDIRECT_URL');
-        $this->userInfoUrl = env('GOOGLE_USER_INFO_URL');
-        $this->clientId = env('GOOGLE_CLIENT_ID');
-        $this->clientSecret = env('GOOGLE_CLIENT_SECRET');
+        $this->authUrl = env('GITLAB_AUTH_URL');
+        $this->tokenUrl = env('GITLAB_TOKEN_URL');
+        $this->redirectUrl = env('GITLAB_REDIRECT_URL');
+        $this->userInfoUrl = env('GITLAB_USER_INFO_URL');
+        $this->clientId = env('GITLAB_CLIENT_ID');
+        $this->clientSecret = env('GITLAB_CLIENT_SECRET');
     }
 
     /**
-     * Redirect user to Google to confirm signing in
+     * Redirect user to GitLab to confirm signing in
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function showGoogleAuthForm()
+    public function showGitLabAuthForm()
     {
         $url = $this->authUrl .
             '?client_id=' . $this->clientId .
             '&redirect_uri=' . $this->redirectUrl .
             '&response_type=code' .
-            '&scope=https://www.googleapis.com/auth/userinfo.email' .
-            '+https://www.googleapis.com/auth/userinfo.profile' .
-            '&include_granted_scopes=true' .
-            '&access_type=offline';
+            '&scope=read_user';
         return redirect($url);
     }
 

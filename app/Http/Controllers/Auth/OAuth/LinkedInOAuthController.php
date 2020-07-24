@@ -4,42 +4,40 @@ namespace App\Http\Controllers\Auth\OAuth;
 
 use Illuminate\Http\Request;
 
-class GoogleOAuthController extends BaseOAuthController
+class LinkedInOAuthController extends BaseOAuthController
 {
     public function __construct()
     {
-        $this->authUrl = env('GOOGLE_AUTH_URL');
-        $this->tokenUrl = env('GOOGLE_TOKEN_URL');
-        $this->redirectUrl = env('GOOGLE_REDIRECT_URL');
-        $this->userInfoUrl = env('GOOGLE_USER_INFO_URL');
-        $this->clientId = env('GOOGLE_CLIENT_ID');
-        $this->clientSecret = env('GOOGLE_CLIENT_SECRET');
-        $this->serviceType = 1; //Google
+        $this->authUrl = env('LINKEDIN_AUTH_URL');
+        $this->tokenUrl = env('LINKEDIN_TOKEN_URL');
+        $this->redirectUrl = env('LINKEDIN_REDIRECT_URL');
+        $this->userInfoUrl = env('LINKEDIN_USER_INFO_URL');
+        $this->clientId = env('LINKEDIN_CLIENT_ID');
+        $this->clientSecret = env('LINKEDIN_CLIENT_SECRET');
+        $this->serviceType = 2; //LinkedId
 
         parent::__construct();
     }
 
     /**
-     * Redirect user to Google to confirm signing in.
+     * Redirect user to LinkedIn to confirm signing in.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function showGoogleAuthForm()
+    public function showLinkedInAuthForm()
     {
         $params = [
             'client_id' => $this->clientId,
             'redirect_uri' => $this->redirectUrl,
-            'scope' => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+            'scope' => 'r_liteprofile r_emailaddress',
             'response_type' => 'code',
-            'include_granted_scopes' => 'true',
-            'access_type' => 'offline'
         ];
 
         return $this->redirectToAuthService($params);
     }
 
     /**
-     * Receive a special code in request from Google and go through auth flow.
+     * Receive a special code in request from LinkedId and go through auth flow.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
